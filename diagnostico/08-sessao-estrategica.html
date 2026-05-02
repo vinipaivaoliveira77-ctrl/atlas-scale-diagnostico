@@ -426,9 +426,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        const SUPABASE_URL = 'https://uufqqlqbrxjkqasbfqjs.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_vJfo0yO2fMjg8TojQHyIGA_6BRsWNNf';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        (function() {
+            const SUPABASE_URL = 'https://uufqqlqbrxjkqasbfqjs.supabase.co';
+            const SUPABASE_KEY = 'sb_publishable_vJfo0yO2fMjg8TojQHyIGA_6BRsWNNf';
+            const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         const form = document.getElementById('sessionForm');
         const btnNext = document.getElementById('btnNext');
@@ -576,6 +577,7 @@
         });
 
         showStep(1);
+        })();
     </script>
 </body>
 </html>
