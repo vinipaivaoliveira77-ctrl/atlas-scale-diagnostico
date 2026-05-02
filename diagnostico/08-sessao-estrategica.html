@@ -306,8 +306,7 @@
         </div>
 
         <div class="header">
-            <h1>Sessão Estratégica</h1>
-            <p>Agende sua consulta em 2 minutos</p>
+            <p style="color: rgba(245, 245, 245, 0.5); font-size: 14px; margin-bottom: 20px;">Aplicação para Reunião</p>
         </div>
 
         <form id="sessionForm">
@@ -394,14 +393,14 @@
                 <div class="step-label">Pergunta 7 de 7</div>
                 <div class="question">Já trabalha com outras agências?</div>
                 <div class="option-group">
-                    <label class="radio-option">
-                        <input type="radio" name="agencias" value="sim" required>
-                        <label for="">Sim</label>
-                    </label>
-                    <label class="radio-option">
-                        <input type="radio" name="agencias" value="nao" required>
-                        <label for="">Não</label>
-                    </label>
+                    <div class="radio-option">
+                        <input type="radio" id="sim" name="agencias" value="sim" required>
+                        <label for="sim">Sim</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="nao" name="agencias" value="nao" required>
+                        <label for="nao">Não</label>
+                    </div>
                 </div>
                 <div class="error-message" id="erroAgencias"></div>
             </div>
