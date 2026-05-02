@@ -357,14 +357,14 @@
                 <div class="form-group">
                     <select id="tipoNegocio" name="tipoNegocio" required>
                         <option value="">Selecione um segmento</option>
-                        <option value="Dentistas">Dentistas</option>
-                        <option value="Médicos">Médicos</option>
-                        <option value="Biomédicos">Biomédicos</option>
-                        <option value="Fisioterapeutas">Fisioterapeutas</option>
-                        <option value="Nutricionistas">Nutricionistas</option>
-                        <option value="Esteticistas">Esteticistas</option>
-                        <option value="Psicólogos">Psicólogos</option>
-                        <option value="Terapeutas">Terapeutas</option>
+                        <option value="Dentista">Dentista</option>
+                        <option value="Médico">Médico</option>
+                        <option value="Biomédico">Biomédico</option>
+                        <option value="Fisioterapeuta">Fisioterapeuta</option>
+                        <option value="Nutricionista">Nutricionista</option>
+                        <option value="Esteticista">Esteticista</option>
+                        <option value="Psicólogo">Psicólogo</option>
+                        <option value="Terapeuta">Terapeuta</option>
                         <option value="Outro">Outro</option>
                     </select>
                     <div class="error-message" id="erroTipoNegocio"></div>
@@ -391,7 +391,7 @@
             <!-- Step 7: Agências -->
             <div class="step" data-step="7">
                 <div class="step-label">Pergunta 7 de 7</div>
-                <div class="question">Já trabalha com outras agências?</div>
+                <div class="question">Já trabalhou com outras agências?</div>
                 <div class="option-group">
                     <div class="radio-option">
                         <input type="radio" id="sim" name="agencias" value="sim" required>
@@ -548,7 +548,7 @@
 
                 try {
                     const { error } = await supabase
-                        .from('sessoes_estrategicas')
+                        .from('Leads - Sessão Estratégica')
                         .insert([dados]);
 
                     if (error) throw error;
