@@ -306,7 +306,7 @@
         </div>
 
         <div class="header">
-            <p style="color: rgba(245, 245, 245, 0.5); font-size: 14px; margin-bottom: 20px;">Aplicação para Reunião</p>
+            <h1 style="font-size: 42px; margin-bottom: 20px;">Aplicação para Reunião</h1>
         </div>
 
         <form id="sessionForm">
@@ -521,8 +521,14 @@
 
         btnNext.addEventListener('click', async (e) => {
             e.preventDefault();
+            console.log('Botão clicado, step:', currentStep);
 
-            if (!validateStep(currentStep)) return;
+            if (!validateStep(currentStep)) {
+                console.log('Validação falhou');
+                return;
+            }
+
+            console.log('Validação passou, avançando...');
 
             if (currentStep === 7) {
                 // Enviar dados
