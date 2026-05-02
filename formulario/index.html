@@ -297,6 +297,174 @@
             color: #7E3BEC;
             text-decoration: none;
         }
+
+        /* RESPONSIVO - MOBILE */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 0;
+            }
+
+            .container {
+                max-width: 100%;
+                padding: 0 16px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .question {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            .progress-bar {
+                margin-bottom: 24px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            select {
+                padding: 12px 12px;
+                font-size: 16px;
+            }
+
+            .button-group {
+                flex-direction: column-reverse;
+                gap: 10px;
+                margin-top: 24px;
+            }
+
+            button {
+                padding: 16px 16px;
+                font-size: 13px;
+            }
+
+            .success-container {
+                padding: 30px 16px;
+            }
+
+            .success-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 36px;
+            }
+
+            .success-container h2 {
+                font-size: 24px;
+            }
+
+            .success-container p {
+                font-size: 13px;
+            }
+
+            .redirect-notice {
+                font-size: 11px;
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 0;
+            }
+
+            .container {
+                padding: 0 12px;
+            }
+
+            .progress-bar {
+                margin-bottom: 20px;
+                height: 3px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+                margin-bottom: 6px;
+            }
+
+            .header p {
+                font-size: 12px;
+            }
+
+            .step-label {
+                font-size: 10px;
+                margin-bottom: 12px;
+            }
+
+            .question {
+                font-size: 16px;
+                margin-bottom: 16px;
+            }
+
+            label {
+                font-size: 11px;
+                margin-bottom: 8px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            select {
+                padding: 12px 12px;
+                font-size: 16px;
+                border-radius: 4px;
+            }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+
+            .option-group {
+                gap: 10px;
+            }
+
+            .radio-option {
+                padding: 12px;
+                font-size: 13px;
+            }
+
+            button {
+                padding: 14px 12px;
+                font-size: 12px;
+            }
+
+            .btn-back {
+                order: 2;
+            }
+
+            .btn-next {
+                order: 1;
+            }
+
+            .success-container {
+                padding: 24px 12px;
+            }
+
+            .success-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 32px;
+                margin-bottom: 16px;
+            }
+
+            .success-container h2 {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            .success-container p {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .redirect-notice {
+                margin-top: 16px;
+                padding: 8px;
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 <body>
