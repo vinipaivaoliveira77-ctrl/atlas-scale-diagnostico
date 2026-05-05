@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Diagnóstico - Atlas Scale</title>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Alexandria', sans-serif;
+            background: #0C0C0C;
+            color: #F5F5F5;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* TELA DE DADOS INICIAIS */
+        .form-screen {
+            background: #141414;
+            border: 1px solid rgba(245, 245, 245, 0.1);
+            border-radius: 8px;
+            padding: 40px;
+        }
+
+        .form-screen h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #7E3BEC 0%, #AB78FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .form-screen p {
+            color: rgba(245, 245, 245, 0.6);
+            margin-bottom: 32px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: rgba(245, 245, 245, 0.8);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: #0C0C0C;
+            border: 1px solid rgba(245, 245, 245, 0.1);
+            border-radius: 6px;
+            color: #F5F5F5;
+            font-family: 'Alexandria', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #7E3BEC;
+        }
+
+        .form-group input::placeholder {
+            color: rgba(245, 245, 245, 0.3);
+        }
+
+        /* TELA DO QUIZ */
+        .quiz-screen {
+            background: #141414;
+            border: 1px solid rgba(245, 245, 245, 0.1);
+            border-radius: 8px;
+            padding: 40px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(245, 245, 245, 0.1);
+            border-radius: 2px;
+            margin-bottom: 32px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #7E3BEC 0%, #AB78FF 100%);
+            transition: width 0.3s ease;
+        }
+
+        .question-number {
+            font-size: 12px;
+            color: rgba(245, 245, 245, 0.5);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .question-number strong {
+            color: #7E3BEC;
+        }
+
+        .quiz-screen h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 28px;
+            line-height: 1.4;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .option {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .option label {
+            display: block;
+            padding: 14px 16px;
+            background: #0C0C0C;
+            border: 1px solid rgba(245, 245, 245, 0.1);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .option input:checked + label {
+            background: rgba(126, 59, 236, 0.1);
+            border-color: #7E3BEC;
+            color: #F5F5F5;
+        }
+
+        .option label:hover {
+            border-color: rgba(126, 59, 236, 0.5);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Alexandria', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7E3BEC 0%, #AB78FF 100%);
+            color: #FFFFFF;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(126, 59, 236, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: rgba(245, 245, 245, 0.6);
+            border: 1px solid rgba(245, 245, 245, 0.1);
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(245, 245, 245, 0.3);
+            color: #F5F5F5;
+        }
+
+        .area-indicator {
+            font-size: 12px;
+            color: rgba(245, 245, 245, 0.5);
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(245, 245, 245, 0.1);
+        }
+
+        .area-indicator strong {
+            color: #7E3BEC;
+        }
+
+        .button-group {
+            margin-top: 40px;
+        }
+
+        .error {
+            color: #FF6B6B;
+            font-size: 12px;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        /* RESPONSIVO - MOBILE */
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 12px;
+            }
+
+            p {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            input[type="number"] {
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            button {
+                padding: 14px 20px;
+                font-size: 13px;
+            }
+
+            .progress-bar {
+                height: 3px;
+                margin-bottom: 24px;
+            }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+
+            label {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .button-group {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+
+            h1 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+
+            p {
+                font-size: 13px;
+            }
+
+            .title {
+                font-size: 16px;
+                margin-bottom: 20px;
+            }
+
+            .subtitle {
+                font-size: 12px;
+                margin-bottom: 12px;
+            }
+
+            .form-group {
+                margin-bottom: 14px;
+            }
+
+            label {
+                font-size: 11px;
+                margin-bottom: 6px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            input[type="number"] {
+                padding: 11px;
+                font-size: 16px;
+                border-radius: 3px;
+            }
+
+            .option-label {
+                font-size: 13px;
+            }
+
+            .score-section {
+                padding: 16px;
+            }
+
+            .score-title {
+                font-size: 18px;
+            }
+
+            .score-value {
+                font-size: 28px;
+            }
+
+            button {
+                padding: 12px 16px;
+                font-size: 12px;
+                border-radius: 3px;
+            }
+
+            .progress-bar {
+                height: 2px;
+            }
+
+            .button-group {
+                flex-direction: column-reverse;
+                gap: 8px;
+            }
+        }
+    </style>
+    <!-- Meta Pixel + CAPI Fallback -->
+    <script>
+        console.log('=== Meta Pixel + CAPI Script iniciando ===');
+
+        // Criar fbq como função dummy (será sobrescrita se o Pixel carregar)
+        window.fbq = window.fbq || function(){
+            (window.fbq.q = window.fbq.q || []).push(arguments);
+        };
+        window.fbq.q = window.fbq.q || [];
+
+        // Carregar Meta Pixel
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+        script.onerror = function(){ console.warn('Meta Pixel failed to load, using CAPI only'); };
+        document.head.appendChild(script);
+
+        // Tentar inicializar fbq, com timeout fallback para CAPI
+        setTimeout(function(){
+            if(window.fbq && typeof window.fbq === 'function'){
+                console.log('Meta Pixel loaded, initializing');
+                window.fbq('init', '2029197850886393');
+                window.fbq('track', 'PageView');
+            } else {
+                console.log('Meta Pixel not available, using CAPI only');
+                dispatchCAPI('PageView');
+            }
+        }, 3000);
+
+        // Função para disparar via CAPI
+        function dispatchCAPI(eventName){
+            var payload={
+                event_name: eventName,
+                event_source_url: window.location.href,
+                client_user_agent: navigator.userAgent,
+                fbp: document.cookie.split('; ').find(function(row){return row.startsWith('_fbp=')})?.split('=')[1]||'',
+                fbc: document.cookie.split('; ').find(function(row){return row.startsWith('_fbc=')})?.split('=')[1]||''
+            };
+            fetch('/api/meta-event',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify(payload)
+            }).then(function(response){
+                console.log(eventName + ' CAPI response:', response.status);
+            }).catch(function(e){
+                console.error(eventName + ' CAPI error:', e);
+            });
+        }
+
+        // Expor função globalmente para uso no formulário
+        window.dispatchCAPI = dispatchCAPI;
+    </script>
+    <!-- End Meta Pixel + CAPI -->
+</head>
+<body>
+    <div class="container">
+        <!-- TELA 1: COLETA DE DADOS -->
+        <div class="screen active form-screen" id="formScreen">
+            <h1>Vamos começar</h1>
+            <p>Precisamos de algumas informações para personalizar seu diagnóstico</p>
+
+            <form id="initialForm">
+                <div class="form-group">
+                    <label for="name">Nome completo</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Telefone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Nome da empresa</label>
+                    <input type="text" id="company" name="company" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="revenue">Faturamento mensal</label>
+                    <select id="revenue" name="revenue" required>
+                        <option value="">Selecione uma faixa</option>
+                        <option value="<5k">Menos de R$ 5 mil</option>
+                        <option value="5-10k">R$ 5 mil a R$ 10 mil</option>
+                        <option value="10-30k">R$ 10 mil a R$ 30 mil</option>
+                        <option value="30-60k">R$ 30 mil a R$ 60 mil</option>
+                        <option value="60-100k">R$ 60 mil a R$ 100 mil</option>
+                        <option value="100-200k">R$ 100 mil a R$ 200 mil</option>
+                        <option value=">200k">Mais de R$ 200 mil</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%; margin-top: 24px;">Começar Quiz</button>
+            </form>
+        </div>
+
+        <!-- TELA 2: QUIZ -->
+        <div class="screen quiz-screen" id="quizScreen">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="error" id="errorMessage">Selecione uma opção para continuar</div>
+
+            <div class="question-number">Pergunta <strong id="questionNumber">1</strong> de 8</div>
+            <h2 id="questionText"></h2>
+
+            <div class="options-group" id="optionsGroup"></div>
+
+            <div class="area-indicator">
+                Área: <strong id="areaName"></strong>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn-secondary" id="btnPrev" onclick="previousQuestion()">Voltar</button>
+                <button type="button" class="btn-primary" id="btnNext" onclick="nextQuestion()">Próxima</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                area: 'Tráfego',
+                weight: 0.30,
+                question: 'Volume de leads/conversões está aumentando mês a mês?',
+                options: [
+                    { text: 'Não, está diminuindo', points: 0 },
+                    { text: 'Mais ou menos, oscila bastante', points: 5 },
+                    { text: 'Sim, aumenta consistentemente', points: 10 }
+                ]
+            },
+            {
+                area: 'Tráfego',
+                weight: 0.30,
+                question: 'Agência fornece relatórios claros sobre desempenho dos anúncios?',
+                options: [
+                    { text: 'Nunca ou raramente', points: 0 },
+                    { text: 'Às vezes, mas desorganizados', points: 5 },
+                    { text: 'Sim, claros e completos', points: 10 }
+                ]
+            },
+            {
+                area: 'Tráfego',
+                weight: 0.30,
+                question: 'Agência apresenta planejamento mensal claro para atingir metas?',
+                options: [
+                    { text: 'Não tem planejamento definido', points: 0 },
+                    { text: 'Tem, mas superficial', points: 5 },
+                    { text: 'Sim, detalhado e orientado a metas', points: 10 }
+                ]
+            },
+            {
+                area: 'Criatividade',
+                weight: 0.10,
+                question: 'Agência te passa textos/copy para os criativos (vídeos/imagens)?',
+                options: [
+                    { text: 'Nunca passa', points: 0 },
+                    { text: 'Às vezes passa', points: 5 },
+                    { text: 'Sempre, com briefing completo', points: 10 }
+                ]
+            },
+            {
+                area: 'Funil',
+                weight: 0.25,
+                question: 'Agência rastreia e relata o funil completo (clique → landing → lead → venda)?',
+                options: [
+                    { text: 'Não rastreia ou rastreia parcialmente', points: 0 },
+                    { text: 'Rastreia alguns pontos', points: 5 },
+                    { text: 'Rastreia tudo e relata regularmente', points: 10 }
+                ]
+            },
+            {
+                area: 'Funil',
+                weight: 0.25,
+                question: 'Agência oferece recomendações de ajustes para melhorar o funil?',
+                options: [
+                    { text: 'Nunca oferece', points: 0 },
+                    { text: 'Ocasionalmente', points: 5 },
+                    { text: 'Regularmente, baseado em dados', points: 10 }
+                ]
+            },
+            {
+                area: 'Suporte Comercial',
+                weight: 0.25,
+                question: 'Você acha que sua agência compreende bem seu mercado e sua comunicação?',
+                options: [
+                    { text: 'Não, parece muito genérica', points: 0 },
+                    { text: 'Compreende parcialmente', points: 5 },
+                    { text: 'Sim, compreende profundamente', points: 10 }
+                ]
+            },
+            {
+                area: 'Suporte Comercial',
+                weight: 0.25,
+                question: 'Agência oferece insights e recomendações baseadas em dados regularmente?',
+                options: [
+                    { text: 'Nunca ou raramente', points: 0 },
+                    { text: 'Às vezes', points: 5 },
+                    { text: 'Sim, constantemente', points: 10 }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = new Array(8).fill(null);
+        let userData = {};
+
+        // Inicializar o quiz
+        function initQuiz() {
+            document.getElementById('formScreen').classList.remove('active');
+            document.getElementById('quizScreen').classList.add('active');
+            showQuestion();
+        }
+
+        // Mostrar pergunta atual
+        function showQuestion() {
+            const question = quizData[currentQuestion];
+
+            document.getElementById('questionNumber').textContent = currentQuestion + 1;
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('areaName').textContent = question.area;
+
+            const optionsGroup = document.getElementById('optionsGroup');
+            optionsGroup.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const optionHTML = `
+                    <div class="option">
+                        <input
+                            type="radio"
+                            name="option"
+                            id="option${index}"
+                            value="${index}"
+                            ${answers[currentQuestion] === index ? 'checked' : ''}
+                            onchange="selectOption(${index})"
+                        >
+                        <label for="option${index}">${option.text}</label>
+                    </div>
+                `;
+                optionsGroup.innerHTML += optionHTML;
+            });
+
+            // Atualizar barra de progresso
+            const progress = ((currentQuestion + 1) / 8) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            // Botões
+            document.getElementById('btnPrev').style.display = currentQuestion === 0 ? 'none' : 'block';
+            document.getElementById('btnNext').textContent = currentQuestion === 7 ? 'Ver Resultado' : 'Próxima';
+
+            // Limpar erro
+            document.getElementById('errorMessage').classList.remove('show');
+        }
+
+        function selectOption(index) {
+            answers[currentQuestion] = index;
+            document.getElementById('errorMessage').classList.remove('show');
+
+            // Avançar automaticamente
+            setTimeout(() => {
+                if (currentQuestion === 7) {
+                    finishQuiz();
+                } else {
+                    currentQuestion++;
+                    showQuestion();
+                    window.scrollTo(0, 0);
+                }
+            }, 300);
+        }
+
+        function nextQuestion() {
+            if (answers[currentQuestion] === null) {
+                document.getElementById('errorMessage').classList.add('show');
+                return;
+            }
+
+            if (currentQuestion === 7) {
+                finishQuiz();
+            } else {
+                currentQuestion++;
+                showQuestion();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function finishQuiz() {
+            // Calcular scores
+            const areaScores = {
+                'Tráfego': 0,
+                'Criatividade': 0,
+                'Funil': 0,
+                'Suporte Comercial': 0
+            };
+
+            let totalPoints = 0;
+            quizData.forEach((question, index) => {
+                const selectedOption = question.options[answers[index]];
+                const points = selectedOption.points;
+                areaScores[question.area] += points;
+                totalPoints += points;
+            });
+
+            // Score geral: total / 80 * 100
+            const generalScore = Math.round((totalPoints / 80) * 100);
+
+            // Normalizar scores por área (considerar peso)
+            const areaWeights = {
+                'Tráfego': 0.30,
+                'Criatividade': 0.10,
+                'Funil': 0.25,
+                'Suporte Comercial': 0.25
+            };
+
+            const maxPointsByArea = {
+                'Tráfego': 30, // 3 perguntas × 10
+                'Criatividade': 10, // 1 pergunta × 10
+                'Funil': 20, // 2 perguntas × 10
+                'Suporte Comercial': 20 // 2 perguntas × 10
+            };
+
+            const normalizedScores = {};
+            Object.keys(areaScores).forEach(area => {
+                normalizedScores[area] = Math.round((areaScores[area] / maxPointsByArea[area]) * 100);
+            });
+
+            // Salvar dados em localStorage
+            const quizResult = {
+                generalScore: generalScore,
+                areaScores: normalizedScores,
+                userData: userData,
+                timestamp: new Date().toISOString()
+            };
+
+            localStorage.setItem('quizResult', JSON.stringify(quizResult));
+
+            // Redirecionar para relatório
+            window.location.href = '07-relatorio-redesign.html';
+        }
+
+        // Função para disparar eventos Meta (Pixel + CAPI)
+        function dispatchMetaEvent(eventName) {
+            const qualifiedRevenues = ['30-60k', '60-100k', '100-200k', '>200k'];
+            const revenueValue = document.getElementById('revenue').value;
+            const isLeadQualified = qualifiedRevenues.includes(revenueValue);
+
+            console.log('Iniciando disparo de evento:', eventName, 'Qualificado:', isLeadQualified);
+
+            // 1. Tentar disparar via Meta Pixel
+            if(window.fbq && typeof window.fbq === 'function'){
+                window.fbq('track', eventName);
+                if(isLeadQualified){
+                    window.fbq('trackCustom', 'LeadQualificado', { revenue: revenueValue });
+                }
+                console.log('Evento disparado via Pixel:', eventName);
+            }
+
+            // 2. Disparar via CAPI (fallback ou complemento)
+            const payload = {
+                event_name: eventName,
+                email: userData.email,
+                phone: userData.phone,
+                name: userData.name,
+                event_source_url: window.location.href,
+                client_user_agent: navigator.userAgent,
+                fbp: document.cookie.split('; ').find(row => row.startsWith('_fbp='))?.split('=')[1] || '',
+                fbc: document.cookie.split('; ').find(row => row.startsWith('_fbc='))?.split('=')[1] || ''
+            };
+
+            fetch('/api/meta-event', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            }).then(function(response) {
+                console.log(eventName + ' enviado via CAPI com sucesso (status:', response.status + ')');
+                if (isLeadQualified) {
+                    const qualifiedPayload = { ...payload, event_name: 'LeadQualificado' };
+                    return fetch('/api/meta-event', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(qualifiedPayload)
+                    });
+                }
+            }).then(function(response) {
+                if (isLeadQualified) {
+                    console.log('LeadQualificado enviado via CAPI com sucesso (status:', response.status + ')');
+                }
+            }).catch(function(error) {
+                console.error('Erro ao disparar evento Meta via CAPI:', error);
+            });
+        }
+
+        // Evento de envio do formulário
+        document.getElementById('initialForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            userData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                company: document.getElementById('company').value,
+                revenue: document.getElementById('revenue').value
+            };
+
+            console.log('Formulário submetido, userData:', userData);
+            // Disparar evento Meta de Lead
+            dispatchMetaEvent('Lead');
+
+            initQuiz();
+        });
+    </script>
+</body>
+</html>

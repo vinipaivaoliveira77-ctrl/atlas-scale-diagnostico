@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Seu Diagnóstico - Atlas Scale</title>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #7E3BEC;
+      --primary-light: #AB78FF;
+      --dark: #000000;
+      --surface: #0C0C0C;
+      --surface-hover: #141414;
+      --text-primary: #F5F5F5;
+      --text-secondary: rgba(245, 245, 245, 0.6);
+      --border: rgba(245, 245, 245, 0.1);
+      --teal: #2A8B7A;
+      --amber: #D4850A;
+      --cyan: #2A7AC4;
+      --rose: #C4407A;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--dark) 0%, #0a0a0a 100%);
+      color: var(--text-primary);
+      font-family: 'Alexandria', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Efeito de fundo sutil */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(126, 59, 236, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(42, 139, 122, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .header h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    .header p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+    }
+
+    /* Score Section */
+    .score-section {
+      background: linear-gradient(135deg, rgba(126, 59, 236, 0.1) 0%, rgba(42, 139, 122, 0.05) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 3rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      animation: slideUp 0.7s ease-out 0.1s both;
+    }
+
+    .score-label {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 1rem;
+    }
+
+    .score-number {
+      font-size: 5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      line-height: 1;
+    }
+
+    .score-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .score-description {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Areas Grid */
+    .areas-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      animation: slideUp 0.7s ease-out 0.2s both;
+    }
+
+    .area-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .area-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .area-card:hover {
+      background: var(--surface-hover);
+      border-color: var(--primary);
+    }
+
+    .area-card:hover::before {
+      opacity: 1;
+    }
+
+    .area-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .area-name {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.8rem;
+    }
+
+    .area-score {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .area-bar {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .area-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--primary-light));
+      border-radius: 2px;
+      transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
+    }
+
+    /* Diagnóstico Section */
+    .diagnostico-section {
+      margin-bottom: 3rem;
+      animation: slideUp 0.7s ease-out 0.3s both;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+      border-radius: 2px;
+    }
+
+    .diagnostico-item {
+      background: var(--surface);
+      border-left: 3px solid var(--primary);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .diagnostico-item:hover {
+      background: var(--surface-hover);
+      transform: translateX(4px);
+    }
+
+    .diagnostico-item h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .diagnostico-item p {
+      color: var(--text-secondary);
+      margin-bottom: 0.8rem;
+      line-height: 1.7;
+    }
+
+    .diagnostico-item p:last-child {
+      margin-bottom: 0;
+    }
+
+    .insight {
+      background: rgba(126, 59, 236, 0.08);
+      border-left: 3px solid var(--primary);
+      padding: 1rem;
+      border-radius: 6px;
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    /* Copy Section */
+    .copy-section {
+      background: linear-gradient(135deg, rgba(126, 59, 236, 0.12) 0%, rgba(42, 139, 122, 0.06) 100%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      animation: slideUp 0.7s ease-out 0.4s both;
+    }
+
+    .copy-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+      color: var(--primary-light);
+    }
+
+    .copy-section p {
+      margin-bottom: 1rem;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .copy-section ul {
+      list-style: none;
+      margin: 1.5rem 0;
+    }
+
+    .copy-section li {
+      padding-left: 1.8rem;
+      margin-bottom: 0.8rem;
+      position: relative;
+      color: var(--text-secondary);
+    }
+
+    .copy-section li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .social-proof {
+      background: rgba(126, 59, 236, 0.15);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-left: 3px solid var(--primary);
+    }
+
+    .social-proof strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--primary-light);
+    }
+
+    /* CTA Button */
+    .cta-container {
+      text-align: center;
+      animation: slideUp 0.7s ease-out 0.5s both;
+    }
+
+    .whatsapp-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      padding: 1.2rem 2.5rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(126, 59, 236, 0.25);
+    }
+
+    .whatsapp-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(126, 59, 236, 0.35);
+    }
+
+    .whatsapp-btn:active {
+      transform: translateY(0);
+    }
+
+    .cta-subtitle {
+      color: var(--text-secondary);
+      margin-top: 1rem;
+      font-size: 0.95rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 2rem 1.5rem;
+      }
+
+      .score-number {
+        font-size: 3.5rem;
+      }
+
+      .header h1 {
+        font-size: 1.8rem;
+      }
+
+      .areas-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .diagnostico-item {
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 1.5rem 1rem;
+        max-width: 100%;
+      }
+
+      .header {
+        margin-bottom: 1.5rem;
+      }
+
+      .header h1 {
+        font-size: 1.4rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .header p {
+        font-size: 0.85rem;
+      }
+
+      .score-container {
+        padding: 1.5rem 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .score-number {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .score-label {
+        font-size: 0.85rem;
+      }
+
+      .areas-label {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .areas-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .diagnostico-item {
+        padding: 1rem;
+        border-radius: 4px;
+      }
+
+      .diagnostico-label {
+        font-size: 0.8rem;
+      }
+
+      .diagnostico-title {
+        font-size: 0.95rem;
+        margin: 0.5rem 0;
+      }
+
+      .diagnostico-text {
+        font-size: 0.85rem;
+        line-height: 1.4;
+      }
+
+      .cta-section {
+        padding: 1.5rem 1rem;
+        text-align: center;
+      }
+
+      .cta-section h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .cta-section p {
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+      }
+
+      .cta-button {
+        padding: 0.85rem 1.5rem;
+        font-size: 0.9rem;
+        width: 100%;
+      }
+    }
+  </style>
+  <!-- Meta Pixel + CAPI Fallback -->
+  <script>
+    console.log('=== Meta Pixel + CAPI Script iniciando ===');
+
+    // Criar fbq como função dummy (será sobrescrita se o Pixel carregar)
+    window.fbq = window.fbq || function(){
+        (window.fbq.q = window.fbq.q || []).push(arguments);
+    };
+    window.fbq.q = window.fbq.q || [];
+
+    // Carregar Meta Pixel
+    var script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://connect.facebook.net/en_US/fbevents.js';
+    script.onerror = function(){ console.warn('Meta Pixel failed to load, using CAPI only'); };
+    document.head.appendChild(script);
+
+    // Tentar inicializar fbq, com timeout fallback para CAPI
+    setTimeout(function(){
+        if(window.fbq && typeof window.fbq === 'function'){
+            console.log('Meta Pixel loaded, initializing');
+            window.fbq('init', '2029197850886393');
+            window.fbq('track', 'PageView');
+        } else {
+            console.log('Meta Pixel not available, using CAPI only');
+            dispatchCAPI('PageView');
+        }
+    }, 3000);
+
+    // Função para disparar via CAPI
+    function dispatchCAPI(eventName){
+        var payload={
+            event_name: eventName,
+            event_source_url: window.location.href,
+            client_user_agent: navigator.userAgent,
+            fbp: document.cookie.split('; ').find(function(row){return row.startsWith('_fbp=')})?.split('=')[1]||'',
+            fbc: document.cookie.split('; ').find(function(row){return row.startsWith('_fbc=')})?.split('=')[1]||''
+        };
+        fetch('/api/meta-event',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(payload)
+        }).then(function(response){
+            console.log(eventName + ' CAPI response:', response.status);
+        }).catch(function(e){
+            console.error(eventName + ' CAPI error:', e);
+        });
+    }
+
+    // Expor função globalmente para uso no formulário
+    window.dispatchCAPI = dispatchCAPI;
+  </script>
+  <!-- End Meta Pixel + CAPI -->
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Seu Diagnóstico está Pronto</h1>
+      <p>Vamos ver como sua agência está performando</p>
+    </div>
+
+    <!-- Score Principal -->
+    <div class="score-section">
+      <div class="score-label">Score Geral</div>
+      <div class="score-number" id="generalScore">--</div>
+      <div class="score-title" id="scoreTitle">--</div>
+      <div class="score-description" id="scoreDescription">
+        --
+      </div>
+    </div>
+
+    <!-- Scores por Área -->
+    <div class="areas-grid">
+      <div class="area-card">
+        <div class="area-icon">⚡</div>
+        <div class="area-name">Tráfego</div>
+        <div class="area-score" id="trafegoScore">--</div>
+        <div class="area-bar">
+          <div class="area-bar-fill" id="trafegoBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-icon">✨</div>
+        <div class="area-name">Criatividade</div>
+        <div class="area-score" id="criatividadeScore">--</div>
+        <div class="area-bar">
+          <div class="area-bar-fill" id="criatividadeBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-icon">🔀</div>
+        <div class="area-name">Análise de Funil</div>
+        <div class="area-score" id="furilScore">--</div>
+        <div class="area-bar">
+          <div class="area-bar-fill" id="furilBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="area-card">
+        <div class="area-icon">💬</div>
+        <div class="area-name">Suporte</div>
+        <div class="area-score" id="suporteScore">--</div>
+        <div class="area-bar">
+          <div class="area-bar-fill" id="suporteBar" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagnóstico Detalhado -->
+    <div class="diagnostico-section">
+      <h2 class="section-title">Análise Detalhada</h2>
+      <div id="diagnosticoContent"></div>
+    </div>
+
+    <!-- Copy Motivacional -->
+    <div class="copy-section" id="copySection">
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-container">
+      <a href="https://wa.me/5512988563804?text=Olá! Vi meu diagnóstico no quiz da Atlas Scale e gostaria de conversar sobre como vocês podem me ajudar." class="whatsapp-btn">
+        💬 Falar com Atlas Scale no WhatsApp
+      </a>
+      <p class="cta-subtitle">
+        Mesmo que não envie mensagem agora, entraremos em contato com você em breve.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const diagnosticoTemplates = {
+      'Tráfego': {
+        'Crítico': {
+          title: '⚡ Tráfego (0-30%): Custos Descontrolados',
+          content: [
+            'Seus anúncios estão gerando muito pouco. Não há controle sobre quanto você paga por cada lead, e provavelmente está pagando demais.',
+            'O que falta: sua agência não acompanha sequer o básico (cliques, conversões, custo por lead). Não há estratégia de redução de custos. Não há testes de públicos, segmentação ou otimização. É só "deixe a gente rodar e veja o que sai".',
+            'Resultado: você está perdendo dinheiro sistematicamente. Provavelmente está pagando 50%, 100% mais que deveria pelos mesmos resultados. Uma agência boa teria um plano claro de melhoria. Você tem isso?'
+          ]
+        },
+        'Baixo': {
+          title: '⚡ Tráfego (31-60%): Gera Pouco, Caro Demais',
+          content: [
+            'Seus anúncios geram alguns leads, mas você está pagando muito por eles. Há desperdício significativo que está invisível.',
+            'O que falta: sua agência acompanha números (cliques, conversões, volume), mas sem estratégia real de otimização. Não há teste de públicos diferentes, não há análise de qual segmento está muito caro, não há ajuste de orçamento em tempo real. É só "colocamos anúncio e veja o que sai".',
+            'Resultado: você fica na sorte. Alguns meses funcionam melhor que outros. Provavelmente está pagando 20%, 30% mais que deveria pelos mesmos leads. Uma agência boa teria um plano: "Vamos reduzir seu CPM em 15% em 60 dias, testando ABC". Você tem isso?'
+          ]
+        },
+        'Intermediário': {
+          title: '⚡ Tráfego (61-80%): Gera Leads, Mas Deixa Dinheiro na Mesa',
+          content: [
+            'Seus anúncios estão gerando leads. O volume não é mal. Mas há ineficiência clara que está custando dinheiro.',
+            'O que falta: otimização real. Sua agência sabe quanto você paga por lead, mas não está testando formas de reduzir isso. Não há experimentos para encontrar públicos melhores, não há análise de qual segmentação rende mais ROI, não há planejamento de redução de custos. Há trabalho, mas falta estratégia.',
+            'Resultado: você está gerando leads, mas deixando de 15% a 25% de margem na mesa sem nem perceber. Uma agência boa estaria constantemente testando: "E se reduzirmos o CPM nesse público em 10%?", "E se mudarmos o horário de veiculação?", "E se segmentássemos por interesse diferente?". Está acontecendo de forma consistente?'
+          ]
+        },
+        'Ótimo': {
+          title: '⚡ Tráfego (81-100%): Sob Controle, Otimizado',
+          content: [
+            'Seu tráfego está em bom controle. Você sabe exatamente quanto paga por lead, a agência acompanha e otimiza constantemente.',
+            'O que está certo: há estratégia clara, testes frequentes, análise de dados para melhorias. Cada real investido em anúncio está sendo maximizado.',
+            'Mantenha assim. Isso é raro e valioso.'
+          ]
+        }
+      },
+      'Criatividade': {
+        'Crítico': {
+          title: '✨ Criatividade (0-30%): Genéricos, Desgastados, Sem Variedade',
+          content: [
+            'Seus anúncios são genéricos e parecem iguais ao de qualquer outro. Ninguém se diferencia desse jeito.',
+            'O que falta: você não está testando ângulos diferentes. A agência cria um anúncio (talvez dois) e deixa rodando. Nenhuma variedade, nenhum teste real. Há pessoas que iriam converter se vissem outra abordagem, mas nunca vão ver porque você só mostra uma perspectiva.',
+            'Resultado: seus anúncios desgastam muito rápido. Pessoas deixam de notar depois de uma semana. Aí seu custo sobe porque você precisa pagar mais pra conseguir atenção. Uma agência boa deveria estar gerando 5, 10 variações diferentes de anúncio por semana pra teste. Quantos textos novos sua agência ofereceu no mês passado?'
+          ]
+        },
+        'Baixo': {
+          title: '✨ Criatividade (31-60%): Cria Anúncios, Mas Pouca Variedade',
+          content: [
+            'Sua agência cria anúncios, mas com pouca variedade. O mesmo ângulo rodando há semanas.',
+            'O que falta: experimentação real. Sua agência deveria estar testando ângulos completamente diferentes. Um ângulo é "Seu negócio cresce porque temos expertise". Outro é "Seus clientes ganham R$X a mais por mês". Outro é "Você tá perdendo oportunidade". Cada um atrai pessoas diferentes. Qual está testando? Provavelmente um.',
+            'Resultado: seus anúncios perdem efetividade rápido. Você deixa de conquistar pessoas que iriam converter com outro ângulo. A agência deveria oferecer variações constantemente. Isso está acontecendo?'
+          ]
+        },
+        'Intermediário': {
+          title: '✨ Criatividade (61-80%): Mesmo Ângulo Sempre, Deixa Leads na Mesa',
+          content: [
+            'Você cria anúncios, há alguns testes, mas ainda falta variedade real.',
+            'O que falta: experimentação mais agressiva. Há pessoas que iriam converter se vissem um ângulo diferente, mas você não está testando. A agência deveria estar apresentando múltiplos ângulos semanalmente, testando qual funciona melhor com qual segmento.',
+            'Resultado: você deixa de conquistar uma parte do seu público porque não oferece as mensagens que os atraem. Uma agência boa estaria fazendo: "Testamos 5 ângulos diferentes esta semana. Aqui está o desempenho de cada um". Está acontecendo?'
+          ]
+        },
+        'Ótimo': {
+          title: '✨ Criatividade (81-100%): Testa Constantemente, Muita Variedade',
+          content: [
+            'Sua criatividade está em dia. Há variedade real, testes constantes de ângulos diferentes.',
+            'O que está certo: a agência entende que diferentes pessoas respondem a diferentes mensagens e está testando isso constantemente. Há inovação, há experimentação.',
+            'Mantenha assim. Isso que diferencia agência comum de agência que realmente entende marketing.'
+          ]
+        }
+      },
+      'Funil': {
+        'Crítico': {
+          title: '🔀 Funil (0-30%): Navegando no Escuro, Sem Rastreamento',
+          content: [
+            'Você não sabe o que está acontecendo no seu funil. Não há rastreamento claro de onde as pessoas entram, onde saem, ou por que não convertem.',
+            'O que falta: toda a estrutura de análise. Você não sabe se o problema é no clique, na landing, na geração de lead ou na venda. A agência também não. Apenas "você gera X leads e Y viram vendas", sem contexto.',
+            'Resultado: você está cego. Não pode otimizar o que não consegue medir. Uma agência boa teria rastreamento completo: clique → landing → lead → venda. Você tem isso?'
+          ]
+        },
+        'Baixo': {
+          title: '🔀 Funil (31-60%): Rastreia Parcialmente, Faltam Dados',
+          content: [
+            'Sua agência rastreia alguns pontos do funil, mas faltam dados importantes. Você consegue ver parte da história, mas não toda.',
+            'O que falta: visão completa. Alguns pontos do funil têm dados, outros não. Você sabe quantas pessoas clicaram, talvez saiba quantas viram leads, mas não sabe por que algumas não converteram. Há gaps de informação.',
+            'Resultado: você consegue tomar algumas decisões, mas cegamente em outras. Uma agência boa teria rastreamento completo de cada passo. Você tem isso?'
+          ]
+        },
+        'Intermediário': {
+          title: '🔀 Funil (61-80%): Dados Sem Interpretação, Só Números',
+          content: [
+            'Sua agência rastreia bem. Sabe onde as pessoas entram no funil, onde saem, quantas viram leads. Isso é bom. Mas parou aí. Só mostra os números em um relatório.',
+            'O que falta: interpretação e recomendação. "Sua taxa de clique pra landing é 3%, conversão é 2%" é informação. "Sua taxa de clique é 3%, que está 40% abaixo do normal pra este tipo de anúncio. Recomendamos mudar o copy porque..." é insight. Qual você recebe?',
+            'Resultado: você fica com dados, mas sem ação. Sabe que algo não está certo, mas não sabe o quê ou como melhorar. Uma agência boa ofereceria recomendações claras baseadas nesses números.'
+          ]
+        },
+        'Ótimo': {
+          title: '🔀 Funil (81-100%): Rastreia Tudo, Oferece Insights Profundos',
+          content: [
+            'Seu funil está totalmente rastreado e você recebe insights reais.',
+            'O que está certo: a agência não apenas coleta dados, mas interpreta e oferece recomendações. Você sabe o que funciona, o que não funciona, e por quê. Há clareza em cada etapa.',
+            'Mantenha assim. Isso é o que separa agências boas de agências que realmente entendem seu negócio.'
+          ]
+        }
+      },
+      'Suporte Comercial': {
+        'Crítico': {
+          title: '💬 Suporte Comercial (0-30%): Não Entende Seu Negócio',
+          content: [
+            'Sua agência não compreende seu negócio, seu mercado, ou como você fala com seus clientes. Os anúncios saem genéricos.',
+            'O que falta: profundidade. A agência não fez pesquisa real sobre seu nicho. Não sabe seus pain points, seus benefícios únicos, seu tom. Anúncios saem de template genérico que serviria pra qualquer negócio.',
+            'Resultado: você atrai gente genérica. Não qualificada. Uma agência boa entenderia seu mercado profundamente antes de criar um único anúncio.'
+          ]
+        },
+        'Baixo': {
+          title: '💬 Suporte Comercial (31-60%): Entende Superficialmente',
+          content: [
+            'Sua agência entende superficialmente seu negócio. Há algum nível de personalização, mas falta profundidade.',
+            'O que falta: compreensão real. A agência tem uma ideia básica do seu negócio, mas não exploraram fundo seus diferenciais, seu mercado, sua comunicação. Há tentativa de personalização, mas superficial.',
+            'Resultado: seus anúncios são melhores que genéricos, mas não ótimos. Uma agência boa teria passado semanas entendendo seu mercado, seu cliente, seus diferenciais antes de criar qualquer coisa.'
+          ]
+        },
+        'Intermediário': {
+          title: '💬 Suporte Comercial (61-80%): Entende Bem Seu Negócio',
+          content: [
+            'Sua agência tem uma boa compreensão do seu negócio e do seu mercado.',
+            'O que está certo: os anúncios saem personalizados, combinam com quem você é, não parecem templates. Há comprometimento com entender você de verdade.',
+            'Resultado: você atrai gente melhor qualificada porque a mensagem é relevante. Isso importa. Mantenha assim.'
+          ]
+        },
+        'Ótimo': {
+          title: '💬 Suporte Comercial (81-100%): Entende Profundamente',
+          content: [
+            'Sua agência compreende seu negócio em profundidade. O nível de personalização é excepcional.',
+            'O que está certo: a agência conhece seu mercado, seus clientes, seus diferenciais, seu tom. Os anúncios saem personalizados porque são de verdade, não templates. Oferece insights regularmente baseado nesse entendimento.',
+            'Mantenha assim. É isso que diferencia agência comum de agência que realmente entende você e seu negócio. Raro. Valioso.'
+          ]
+        }
+      }
+    };
+
+    function getScoreLevel(score) {
+      if (score <= 30) return 'Crítico';
+      if (score <= 60) return 'Baixo';
+      if (score <= 80) return 'Intermediário';
+      return 'Ótimo';
+    }
+
+    function getLevelDescription(score) {
+      if (score <= 30) return 'Sua agência está deixando muito dinheiro na mesa.';
+      if (score <= 60) return 'Sua agência está entregando, mas há espaço para melhorias significativas.';
+      if (score <= 80) return 'Sua agência está entregando em alguns pontos, mas há bastante espaço para melhorias.';
+      return 'Sua agência está entregendo bem. Continue monitorando, mas você está em bom caminho.';
+    }
+
+    function loadQuizResult() {
+      const quizResult = localStorage.getItem('quizResult');
+
+      if (!quizResult) {
+        document.body.innerHTML = '<div style="display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center;"><div><h1>Sem dados encontrados</h1><p>Por favor, complete o quiz primeiro.</p></div></div>';
+        return;
+      }
+
+      const result = JSON.parse(quizResult);
+      const { generalScore, areaScores, userData } = result;
+      const userName = userData?.name?.split(' ')[0] || 'você';
+
+      // Preencher score geral
+      document.getElementById('generalScore').textContent = generalScore;
+      const level = getScoreLevel(generalScore);
+      document.getElementById('scoreTitle').textContent = level;
+      document.getElementById('scoreDescription').textContent = getLevelDescription(generalScore);
+
+      // Preencher scores por área
+      const areaElements = {
+        'Tráfego': { score: 'trafegoScore', bar: 'trafegoBar' },
+        'Criatividade': { score: 'criatividadeScore', bar: 'criatividadeBar' },
+        'Funil': { score: 'furilScore', bar: 'furilBar' },
+        'Suporte Comercial': { score: 'suporteScore', bar: 'suporteBar' }
+      };
+
+      Object.keys(areaScores).forEach(area => {
+        const score = areaScores[area];
+        const elements = areaElements[area];
+        if (elements) {
+          document.getElementById(elements.score).textContent = score + '%';
+          document.getElementById(elements.bar).style.width = score + '%';
+        }
+      });
+
+      // Preencher diagnóstico detalhado
+      const diagnosticoContent = document.getElementById('diagnosticoContent');
+      diagnosticoContent.innerHTML = '';
+
+      Object.keys(areaScores).forEach(area => {
+        const score = areaScores[area];
+        const level = getScoreLevel(score);
+        const template = diagnosticoTemplates[area][level];
+
+        // Personalizar conteúdo com o nome do usuário
+        const personalizedContent = template.content.map((p, idx) => {
+          let personalized = p;
+          // Adiciona o nome de forma natural nos primeiros parágrafos
+          if (idx === 0) {
+            personalized = `${userName}, ${personalized.charAt(0).toLowerCase()}${personalized.slice(1)}`;
+          }
+          return personalized;
+        });
+
+        const item = document.createElement('div');
+        item.className = 'diagnostico-item';
+        item.innerHTML = `
+          <h3>${template.title}</h3>
+          ${personalizedContent.map(p => `<p>${p}</p>`).join('')}
+        `;
+        diagnosticoContent.appendChild(item);
+      });
+
+      // Gerar copy personalizada baseada no score
+      const copySectionEl = document.getElementById('copySection');
+      let copyHTML = '';
+
+      if (generalScore <= 30) {
+        copyHTML = `
+          <h2>Isso Não Precisa Ser Assim</h2>
+          <p>${userName}, você não está sozinho. Dezenas de profissionais de saúde que trabalham conosco começaram exatamente nessa posição: uma agência que não está entregendo o que deveria, e sem clareza sobre o que fazer.</p>
+          <p><strong>Na Atlas Scale, fazemos diferente.</strong></p>
+          <ul>
+            <li><strong>Tráfego:</strong> Otimizamos cada real que você investe. Reduzindo custos enquanto aumentamos volume de verdade.</li>
+            <li><strong>Criatividade:</strong> Novos criativos, novos ângulos, testes constantes. Seus anúncios nunca ficam velhos.</li>
+            <li><strong>Análise Real:</strong> Não apenas números. Recomendações claras, executáveis e com impacto direto.</li>
+            <li><strong>Parceria:</strong> Você não é um cliente. Você é um parceiro. Estamos tão interessados no seu crescimento quanto você.</li>
+          </ul>
+          <div class="social-proof">
+            <strong>Os números falam:</strong>
+            100+ profissionais de saúde confiam na Atlas Scale. Gerenciamos mais de R$12 milhões em anúncios. Muitos dos nossos parceiros dobraram ou até triplicaram seu faturamento em menos de 12 meses.
+          </div>
+          <p>Se você está pronto para crescimento real, não em métricas, mas em leads qualificados e vendas, vamos conversar.</p>
+        `;
+      } else if (generalScore <= 60) {
+        copyHTML = `
+          <h2>Tem Potencial, Mas Precisa de Mudança</h2>
+          <p>${userName}, sua agência está entregando parcialmente. Isso significa que há fundação, mas há bastante espaço para melhoria. E isso é excelente notícia: não é recomeço, é otimização.</p>
+          <p><strong>Na Atlas Scale, aceleramos de onde você está.</strong></p>
+          <ul>
+            <li><strong>Tráfego:</strong> Otimizamos cada real que você investe. Reduzindo custos enquanto aumentamos volume de verdade.</li>
+            <li><strong>Criatividade:</strong> Novos criativos, novos ângulos, testes constantes. Seus anúncios nunca ficam velhos.</li>
+            <li><strong>Análise Real:</strong> Não apenas números. Recomendações claras, executáveis e com impacto direto.</li>
+            <li><strong>Parceria:</strong> Você não é um cliente. Você é um parceiro. Estamos tão interessados no seu crescimento quanto você.</li>
+          </ul>
+          <div class="social-proof">
+            <strong>Os números falam:</strong>
+            100+ profissionais de saúde confiam na Atlas Scale. Gerenciamos mais de R$12 milhões em anúncios. Muitos dos nossos parceiros dobraram ou até triplicaram seu faturamento em menos de 12 meses.
+          </div>
+          <p>Pronto pra dar um salto? Vamos conversar sobre como accelerar seu crescimento.</p>
+        `;
+      } else if (generalScore <= 80) {
+        copyHTML = `
+          <h2>Você Está no Caminho Certo</h2>
+          <p>${userName}, sua agência está entregendo bem. Há clareza em vários pontos. O que falta é otimização final para levar você de bom a excepcional.</p>
+          <p><strong>Na Atlas Scale, transformamos bom em excepcional.</strong></p>
+          <ul>
+            <li><strong>Tráfego:</strong> Otimizamos cada real que você investe. Reduzindo custos enquanto aumentamos volume de verdade.</li>
+            <li><strong>Criatividade:</strong> Novos criativos, novos ângulos, testes constantes. Seus anúncios nunca ficam velhos.</li>
+            <li><strong>Análise Real:</strong> Não apenas números. Recomendações claras, executáveis e com impacto direto.</li>
+            <li><strong>Parceria:</strong> Você não é um cliente. Você é um parceiro. Estamos tão interessados no seu crescimento quanto você.</li>
+          </ul>
+          <div class="social-proof">
+            <strong>Os números falam:</strong>
+            100+ profissionais de saúde confiam na Atlas Scale. Gerenciamos mais de R$12 milhões em anúncios. Muitos dos nossos parceiros dobraram ou até triplicaram seu faturamento em menos de 12 meses.
+          </div>
+          <p>Vamos conversar sobre como levar você para o próximo nível.</p>
+        `;
+      } else {
+        copyHTML = `
+          <h2>Parabéns, Você Está Muito Bem</h2>
+          <p>${userName}, sua agência está entregando em excelente nível. Você tem clareza, controle e parceria real. Raro. Continue assim.</p>
+          <p><strong>Na Atlas Scale, acreditamos em crescimento contínuo.</strong></p>
+          <ul>
+            <li><strong>Tráfego:</strong> Mantemos otimizado. Cada real investido gerando máximo retorno.</li>
+            <li><strong>Criatividade:</strong> Inovação constante. Seus anúncios sempre frescos e relevantes.</li>
+            <li><strong>Análise Real:</strong> Insights contínuos. Recomendações para levar você além.</li>
+            <li><strong>Parceria:</strong> Você não é cliente. Somos parceiros. Seu sucesso é nosso sucesso.</li>
+          </ul>
+          <div class="social-proof">
+            <strong>Os números falam:</strong>
+            100+ profissionais de saúde confiam na Atlas Scale. Gerenciamos mais de R$12 milhões em anúncios. Muitos dos nossos parceiros dobraram ou até triplicaram seu faturamento em menos de 12 meses.
+          </div>
+          <p>Caso considere expandir ou otimizar ainda mais seu crescimento, estaremos aqui.</p>
+        `;
+      }
+
+      copySectionEl.innerHTML = copyHTML;
+
+      // Limpar localStorage após carregar
+      localStorage.removeItem('quizResult');
+    }
+
+    loadQuizResult();
+  </script>
+</body>
+</html>
