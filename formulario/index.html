@@ -466,6 +466,40 @@
             }
         }
     </style>
+    <!-- Meta Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '2029197850886393');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=2029197850886393&ev=PageView&noscript=1"/></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Meta CAPI - PageView -->
+    <script>
+        (function(){
+            var payload = {
+                event_name: 'PageView',
+                event_source_url: window.location.href,
+                client_user_agent: navigator.userAgent,
+                fbp: (document.cookie.split('; ').find(function(r){return r.indexOf('_fbp=')===0})||'').split('=')[1] || '',
+                fbc: (document.cookie.split('; ').find(function(r){return r.indexOf('_fbc=')===0})||'').split('=')[1] || ''
+            };
+            fetch('/api/meta-event', {
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify(payload)
+            }).catch(function(e){});
+        })();
+    </script>
 </head>
 <body>
     <div class="container">
@@ -721,6 +755,46 @@
                         .insert([dados]);
 
                     if (error) throw error;
+
+                    // Disparar eventos Meta (Pixel + CAPI)
+                    var qualifiedRevenues = ['De R$30.001 a R$60.000', 'De R$61.001 a R$100.000', 'De R$100.001 a R$200.000', 'Acima de R$200.001'];
+                    var qualifiedProfessions = ['Dentista', 'Médico', 'Biomédico'];
+                    var isQualified = qualifiedRevenues.indexOf(dados.faturamento) !== -1 || qualifiedProfessions.indexOf(dados.tipo_negocio) !== -1;
+
+                    // 1. Meta Pixel (client-side)
+                    if (typeof fbq === 'function') {
+                        fbq('track', 'Lead');
+                        if (isQualified) {
+                            fbq('trackCustom', 'LeadQualificado', { faturamento: dados.faturamento, tipo: dados.tipo_negocio });
+                        }
+                    }
+
+                    // 2. Meta CAPI (server-side)
+                    var payload = {
+                        event_name: 'Lead',
+                        email: dados.email,
+                        phone: dados.telefone,
+                        name: dados.nome,
+                        event_source_url: window.location.href,
+                        client_user_agent: navigator.userAgent,
+                        fbp: (document.cookie.split('; ').find(function(r){return r.indexOf('_fbp=')===0})||'').split('=')[1] || '',
+                        fbc: (document.cookie.split('; ').find(function(r){return r.indexOf('_fbc=')===0})||'').split('=')[1] || ''
+                    };
+
+                    fetch('/api/meta-event', {
+                        method: 'POST',
+                        headers: {'Content-Type':'application/json'},
+                        body: JSON.stringify(payload)
+                    }).catch(function(e){});
+
+                    if (isQualified) {
+                        var qualifiedPayload = Object.assign({}, payload, { event_name: 'LeadQualificado' });
+                        fetch('/api/meta-event', {
+                            method: 'POST',
+                            headers: {'Content-Type':'application/json'},
+                            body: JSON.stringify(qualifiedPayload)
+                        }).catch(function(e){});
+                    }
 
                     form.style.display = 'none';
                     successContainer.classList.add('active');
