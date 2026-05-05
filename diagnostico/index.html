@@ -727,12 +727,19 @@
             var qualifiedRevenues = ['30-60k', '60-100k', '100-200k', '>200k'];
             var isQualified = qualifiedRevenues.indexOf(userData.revenue) !== -1;
 
+            console.log('[Meta] userData.revenue:', userData.revenue);
+            console.log('[Meta] isQualified:', isQualified);
+
             // 1. Meta Pixel (client-side)
             if (typeof fbq === 'function') {
                 fbq('track', 'Lead');
+                console.log('[Meta] Pixel Lead disparado');
                 if (isQualified) {
                     fbq('trackCustom', 'LeadQualificado', { revenue: userData.revenue });
+                    console.log('[Meta] Pixel LeadQualificado disparado');
                 }
+            } else {
+                console.warn('[Meta] fbq não disponível');
             }
 
             // 2. Meta CAPI (server-side)
@@ -747,19 +754,36 @@
                 fbc: (document.cookie.split('; ').find(function(r){return r.indexOf('_fbc=')===0})||'').split('=')[1] || ''
             };
 
+            console.log('[Meta] Enviando CAPI Lead:', payload);
+
             fetch('/api/meta-event', {
                 method: 'POST',
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify(payload)
-            }).catch(function(e){});
+            }).then(function(r){
+                console.log('[Meta] CAPI Lead status:', r.status);
+                return r.text();
+            }).then(function(t){
+                console.log('[Meta] CAPI Lead response:', t);
+            }).catch(function(e){
+                console.error('[Meta] CAPI Lead error:', e);
+            });
 
             if (isQualified) {
                 var qualifiedPayload = Object.assign({}, payload, { event_name: 'LeadQualificado' });
+                console.log('[Meta] Enviando CAPI LeadQualificado');
                 fetch('/api/meta-event', {
                     method: 'POST',
                     headers: {'Content-Type':'application/json'},
                     body: JSON.stringify(qualifiedPayload)
-                }).catch(function(e){});
+                }).then(function(r){
+                    console.log('[Meta] CAPI LeadQualificado status:', r.status);
+                    return r.text();
+                }).then(function(t){
+                    console.log('[Meta] CAPI LeadQualificado response:', t);
+                }).catch(function(e){
+                    console.error('[Meta] CAPI LeadQualificado error:', e);
+                });
             }
         }
 
