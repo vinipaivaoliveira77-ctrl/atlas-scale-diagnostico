@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="theme-color" content="#1E2A3A">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="Briefing para criação e otimização de Google Meu Negócio">
+    <title>Briefing GMB — Onboarding de Cliente | Atlas Scale</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+
+        :root {
+            --navy: #1E2A3A;
+            --navy-light: #2D3E54;
+            --gold: #C9A77C;
+            --gold-soft: #E2D7AC;
+            --cream: #FAF7F2;
+            --cream-deep: #F0EAE0;
+            --text-dark: #1A1A1A;
+            --text-light: #6B6B6B;
+            --border-light: #E5E2DC;
+            --bg-light: #F8F5F0;
+            --bg-form: #ffffff;
+            --error: #B23A48;
+            --success: #4A6B5D;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-deep) 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        input:not([type="radio"]):not([type="checkbox"]),
+        textarea, select, button {
+            font-family: inherit;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+
+        .form-container {
+            background: var(--bg-form);
+            border-radius: 16px;
+            box-shadow: 0 25px 70px rgba(30, 42, 58, 0.12), 0 0 0 1px rgba(201, 167, 124, 0.1);
+            max-width: 780px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            padding: 48px 40px 40px;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .form-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--gold);
+        }
+
+        .brand-mark {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 4px;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .form-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+            color: white;
+        }
+
+        .form-header p {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.85);
+            max-width: 520px;
+            margin: 0 auto 16px;
+            line-height: 1.6;
+        }
+
+        .time-note {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(201, 167, 124, 0.15);
+            border: 1px solid rgba(201, 167, 124, 0.4);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--gold-soft);
+            margin-top: 8px;
+        }
+
+        .form-body {
+            padding: 40px;
+        }
+
+        .progress-note {
+            background: var(--bg-light);
+            border-left: 3px solid var(--gold);
+            padding: 14px 18px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 36px;
+            line-height: 1.6;
+        }
+
+        .form-section {
+            margin-bottom: 44px;
+            padding-bottom: 36px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .form-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+
+        .section-number {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        .section-desc {
+            font-size: 0.92rem;
+            color: var(--text-light);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-row-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .required { color: var(--error); margin-left: 2px; }
+
+        input[type="text"], input[type="email"], input[type="tel"],
+        input[type="url"], input[type="date"], input[type="number"],
+        textarea, select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border-light);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.2s ease;
+            background: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C9A77C' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 12px;
+            padding-right: 40px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(201, 167, 124, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+            line-height: 1.5;
+        }
+
+        .hint {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .radio-item, .checkbox-item {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 4px 0;
+            min-height: 28px;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 10px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .radio-label, .checkbox-label {
+            font-weight: 400;
+            cursor: pointer;
+            font-size: 0.92rem;
+            color: var(--text-dark);
+        }
+
+        .hidden-section {
+            display: none;
+            margin-top: 16px;
+            padding: 18px;
+            background: var(--bg-light);
+            border-left: 3px solid var(--gold);
+            border-radius: 6px;
+        }
+
+        .hidden-section.show {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-card {
+            background: linear-gradient(135deg, rgba(201, 167, 124, 0.08) 0%, rgba(30, 42, 58, 0.04) 100%);
+            border: 1px solid rgba(201, 167, 124, 0.2);
+            border-radius: 10px;
+            padding: 20px 22px;
+            margin-bottom: 20px;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: var(--text-dark);
+        }
+
+        .info-card strong {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .info-card ul {
+            margin: 12px 0 0 20px;
+            color: var(--text-light);
+        }
+
+        .info-card li {
+            margin-bottom: 4px;
+        }
+
+        .day-row {
+            display: grid;
+            grid-template-columns: 110px 1fr 1fr;
+            gap: 12px;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .day-row:last-child { border-bottom: none; }
+
+        .day-label {
+            font-weight: 500;
+            font-size: 0.92rem;
+            color: var(--text-dark);
+        }
+
+        .day-row input[type="time"] {
+            padding: 8px 10px;
+            font-size: 0.9rem;
+        }
+
+        .closed-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 40px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border-light);
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            letter-spacing: 0.3px;
+            min-height: 48px;
+            touch-action: manipulation;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: white;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(30, 42, 58, 0.25);
+        }
+
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-secondary {
+            background: white;
+            color: var(--navy);
+            border: 1.5px solid var(--border-light);
+            padding: 14px 24px;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 60px 30px;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--success);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .success-message h3 {
+            font-size: 1.8rem;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .success-message p {
+            color: var(--text-light);
+            max-width: 440px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.82rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .error-message.show { display: block; }
+        input.error, textarea.error, select.error { border-color: var(--error); }
+
+        @media (max-width: 640px) {
+            body { padding: 16px 10px; }
+            .form-header { padding: 36px 24px 32px; }
+            .form-header h1 { font-size: 1.6rem; }
+            .form-body { padding: 28px 22px; }
+            .section-title { font-size: 1.35rem; }
+            .form-row, .form-row-3, .checkbox-grid { grid-template-columns: 1fr; }
+            .day-row { grid-template-columns: 1fr; gap: 6px; }
+            .form-buttons { flex-direction: column-reverse; }
+            .btn-primary, .btn-secondary { width: 100%; }
+        }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .form-container { box-shadow: none; max-width: 100%; }
+            .form-buttons { display: none; }
+            .form-header { background: white; color: var(--navy); }
+            .form-header h1, .form-header p { color: var(--navy); }
+            .brand-mark { color: var(--gold); }
+            .time-note { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+
+        <!-- HEADER -->
+        <div class="form-header">
+            <div class="brand-mark">Atlas Scale</div>
+            <h1>Briefing — Google Meu Negócio</h1>
+            <p>Este formulário coleta tudo o que precisamos para criar e otimizar a ficha do seu negócio no Google. Quanto mais completo, mais rápido você aparece nos primeiros resultados de busca local.</p>
+            <div class="time-note">Preenchimento estimado: 15–25 minutos</div>
+        </div>
+
+        <!-- BODY -->
+        <div class="form-body">
+
+            <div class="progress-note">
+                <strong>Dica:</strong> Você pode salvar o progresso imprimindo (Ctrl+P → Salvar como PDF) antes de enviar. Campos com <span class="required">*</span> são obrigatórios. Os demais ajudam a personalizar a estratégia.
+            </div>
+
+            <form id="gmbForm">
+
+                <!-- ============= 1. IDENTIDADE ============= -->
+                <div class="form-section">
+                    <div class="section-title"><span class="section-number">Seção 01</span> Identidade do Negócio</div>
+                    <p class="section-desc">Nome, registro e o que define seu negócio perante o público.</p>
+
+                    <div class="form-group">
+                        <label>Nome Fantasia (como aparece nas redes e fachada) <span class="required">*</span></label>
+                        <input type="text" name="nomeFantasia" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Razão Social</label>
+                            <input type="text" name="razaoSocial">
+                        </div>
+                        <div class="form-group">
+                            <label>CNPJ</label>
+                            <input type="text" name="cnpj" placeholder="00.000.000/0000-00">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ano de fundação</label>
+                            <input type="number" name="anoFundacao" min="1950" max="2026" placeholder="Ex: 2018">
+                        </div>
+                        <div class="form-group">
+                            <label>Faixa de posicionamento <span class="required">*</span></label>
+                            <select name="posicionamento" required>
+                                <option value="">Selecione</option>
+                                <option>Popular</option>
+                                <option>Intermediário</option>
+                                <option>Premium</option>
+                                <option>Luxo / Alto padrão</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Slogan ou frase-conceito (opcional)</label>
+                        <input type="text" name="slogan" placeholder="Ex: Beleza com ciência e acolhimento">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Em uma frase, como você descreve seu negócio?</label>
+                        <textarea name="descricaoCurta" placeholder="Ex: Consultório odontológico focado em estética dental e ortodontia invisível."></textarea>
+                    </div>
+                </div>
+
+                <!-- ============= 2. ENDEREÇO E FUNCIONAMENTO ============= -->
+                <div class="form-section">
+                    <div class="section-title"><span class="section-number">Seção 02</span> Endereço e Funcionamento</div>
+                    <p class="section-desc">Localização exata do estabelecimento e horários de atendimento.</p>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>CEP <span class="required">*</span></label>
+                            <input type="text" name="cep" placeholder="00000-000" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Rua e número <span class="required">*</span></label>
+                            <input type="text" name="rua" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Complemento</label>
+                            <input type="text" name="complemento" placeholder="Sala, andar, bloco">
+                        </div>
+                        <div class="form-group">
+                            <label>Bairro <span class="required">*</span></label>
+                            <input type="text" name="bairro" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Cidade <span class="required">*</span></label>
+                            <input type="text" name="cidade" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Estado (UF) <span class="required">*</span></label>
+                            <input type="text" name="estado" maxlength="2" placeholder="Ex: SP" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ponto de referência</label>
+                        <input type="text" name="referencia" placeholder="Ex: Em frente ao shopping X">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Possui outras unidades além desta?</label>
+                        <div class="radio-group">
+                            <label class="radio-item"><input type="radio" name="multiUnidade" value="nao" onclick="toggle('multiUnidadeBox', false)"><span class="radio-label">Não</span></label>
+                            <label class="radio-item"><input type="radio" name="multiUnidade" value="sim" onclick="toggle('multiUnidadeBox', true)"><span class="radio-label">Sim</span></label>
+                        </div>
+                        <div class="hidden-section" id="multiUnidadeBox">
+                            <label>Quais os endereços das outras unidades?</label>
+                            <textarea name="outrasUnidades" placeholder="Liste endereço completo de cada unidade adicional"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Atende a domicílio?</label>
+                        <div class="radio-group">
+                            <label class="radio-item"><input type="radio" name="domicilio" value="nao" onclick="toggle('domicilioBox', false)"><span class="radio-label">Não</span></label>
+                            <label class="radio-item"><input type="radio" name="domicilio" value="sim" onclick="toggle('domicilioBox', true)"><span class="radio-label">Sim</span></label>
+                        </div>
+                        <div class="hidden-section" id="domicilioBox">
+                            <label>Quais bairros/cidades atende a domicílio?</label>
+                            <textarea name="areasDomicilio"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label style="margin-bottom: 12px;">Horário de funcionamento <span class="required">*</span></label>
+                        <div id="horarios">
+                            <div class="day-row"><span class="day-label">Segunda</span><input type="time" name="seg_abre"><input type="time" name="seg_fecha"></div>
+                            <div class="day-row"><span class="day-label">Terça</span><input type="time" name="ter_abre"><input type="time" name="ter_fecha"></div>
+                            <div class="day-row"><span class="day-label">Quarta</span><input type="time" name="qua_abre"><input type="time" name="qua_fecha"></div>
+                            <div class="day-row"><span class="day-label">Quinta</span><input type="time" name="qui_abre"><input type="time" name="qui_fecha"></div>
+                            <div class="day-row"><span class="day-label">Sexta</span><input type="time" name="sex_abre"><input type="time" name="sex_fecha"></div>
+                            <div class="day-row"><span class="day-label">Sábado</span><input type="time" name="sab_abre"><input type="time" name="sab_fecha"></div>
+                            <div class="day-row"><span class="day-label">Domingo</span><input type="time" name="dom_abre"><input type="time" name="dom_fecha"></div>
+                        </div>
+                        <p class="hint">Deixe em branco os dias em que não funciona. Se houver intervalo (ex: pausa para almoço), descreva no campo abaixo.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Há intervalos, horários especiais ou observações sobre o funcionamento?</label>
+                        <textarea name="horariosObs" placeholder="Ex: Pausa para almoço das 12h às 13h. Em feriados, atende com hora marcada."></textarea>
+                    </div>
+                </div>
+
+                <!-- ============= 3. CONTATO E CANAIS ============= -->
+                <div class="form-section">
+                    <div class="section-title"><span class="section-number">Seção 03</span> Contato e Canais Digitais</div>
+                    <p class="section-desc">Telefones, e-mails, site e redes sociais que serão vinculados ao Google.</p>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Telefone principal <span class="required">*</span></label>
+                            <input type="tel" name="telefone" required placeholder="(00) 0000-0000">
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp comercial <span class="required">*</span></label>
+                            <input type="tel" name="whatsapp" required placeholder="(00) 00000-0000">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>E-mail principal <span class="required">*</span></label>
+                            <input type="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail para agendamento (se diferente)</label>
+                            <input type="email" name="emailAgenda">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Site do negócio (URL)</label>
+                            <input type="url" name="site" placeholder="https://">
+                        </div>
+                        <div class="form-group">
+                            <label>Link de agendamento online</label>
+                            <input type="url" name="agendaLink" placeholder="https://">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Sistema de gestão/agendamento utilizado</label>
+                        <input type="text" name="sistemaGestao" placeholder="Ex: Trinks, GestãoDS, Iclinic, Belle, planilha, agenda física">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Instagram (@)</label>
+                            <input type="text" name="instagram" placeholder="@seunegocio">
+                        </div>
+                        <div class="form-group">
+                            <label>Facebook</label>
+                            <input type="text" name="facebook" placeholder="URL ou @">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>TikTok (@)</label>
+                            <input type="text" name="tiktok">
+                        </div>
+                        <div class="form-group">
+                            <label>YouTube</label>
+                            <input type="text" name="youtube" placeholder="URL do canal">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Está cadastrada em outras plataformas?</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item"><input type="checkbox" name="plat_doctoralia"><span class="checkbox-label">Doctoralia</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="plat_boaconsulta"><span class="checkbox-label">BoaConsulta</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="plat_saude360"><span class="checkbox-label">Saúde360</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="plat_singu"><span class="checkbox-label">Singu / GetNinjas</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="plat_guiamais"><span class="checkbox-label">GuiaMais / Apontador</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="plat_outras"><span class="checkbox-label">Outras (descreva abaixo)</span></label>
+                        </div>
+                        <input type="text" name="plataformasOutras" placeholder="Outras plataformas onde está cadastrada" style="margin-top: 12px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Já tem ficha no Google Meu Negócio?</label>
+                        <div class="radio-group">
+                            <label class="radio-item"><input type="radio" name="temGMB" value="nao" onclick="toggle('gmbBox', false)"><span class="radio-label">Não</span></label>
+                            <label class="radio-item"><input type="radio" name="temGMB" value="sim" onclick="toggle('gmbBox', true)"><span class="radio-label">Sim, mas não está otimizada</span></label>
+                            <label class="radio-item"><input type="radio" name="temGMB" value="naoSei" onclick="toggle('gmbBox', false)"><span class="radio-label">Não sei</span></label>
+                        </div>
+                        <div class="hidden-section" id="gmbBox">
+                            <div class="form-row">
+                                <div class="form-group" style="margin: 0;">
+                                    <label>Link do GMB atual</label>
+                                    <input type="url" name="gmbLink">
+                                </div>
+                                <div class="form-group" style="margin: 0;">
+                                    <label>Nota e número de avaliações</label>
+                                    <input type="text" name="gmbReviews" placeholder="Ex: 4.8 com 23 avaliações">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: 14px; margin-bottom: 0;">
+                                <label>Quem é o e-mail proprietário do GMB hoje?</label>
+                                <input type="email" name="gmbOwnerEmail">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============= 4. RESPONSÁVEL TÉCNICO E EQUIPE ============= -->
+                <div class="form-section">
+                    <div class="section-title"><span class="section-number">Seção 04</span> Responsável Técnico e Equipe</div>
+                    <p class="section-desc">Profissionais habilitados — fundamental para credibilidade no Google e nas avaliações.</p>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Nome do Responsável Técnico (RT) <span class="required">*</span></label>
+                            <input type="text" name="rtNome" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Registro profissional do RT <span class="required">*</span></label>
+                            <input type="text" name="rtRegistro" placeholder="Ex: CRM-SP 123456 / CRBM 9876" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Quantos profissionais atendem no negócio?</label>
+                        <input type="number" name="qtdProfissionais" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Liste cada profissional</label>
+                        <textarea name="equipe" placeholder="Nome — Profissão — Registro — Especialidade&#10;Ex: Maria Silva — Biomédica esteta — CRBM-1 12345 — Harmonização facial"></textarea>
+                        <p class="hint">Inclua nome, profissão, número de registro e principal especialidade de cada um.</p>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Possui alvará sanitário?</label>
+                            <select name="alvara">
+                                <option value="">Selecione</option>
+                                <option>Sim, ativo</option>
+                                <option>Sim, em renovação</option>
+                                <option>Em processo de obtenção</option>
+                                <option>Não</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Possui licença da Vigilância Sanitária?</label>
+                            <select name="vigilancia">
+                                <option value="">Selecione</option>
+                                <option>Sim</option>
+                                <option>Em processo</option>
+                                <option>Não</option>
+                                <option>Não se aplica</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============= 5. SERVIÇOS E ESPECIALIDADES ============= -->
+                <div class="form-section">
+                    <div class="section-title"><span class="section-number">Seção 05</span> Serviços e Especialidades</div>
+                    <p class="section-desc">Selecione o tipo de negócio para liberar a lista de serviços correspondente. O Google ranqueia pelos serviços nomeados — quanto mais preciso, melhor.</p>
+
+                    <div class="form-group">
+                        <label>Tipo de negócio / Especialidade <span class="required">*</span></label>
+                        <select name="tipoNegocio" id="tipoNegocio" onchange="showServicesFor(this.value)" required>
+                            <option value="">Selecione</option>
+                            <option value="estetica">Clínica de estética</option>
+                            <option value="odontologia">Odontologia / Consultório odontológico</option>
+                            <option value="dermatologia">Dermatologia</option>
+                            <option value="ginecologia">Ginecologia / Obstetrícia</option>
+                            <option value="clinico">Clínica médica / Consultório geral</option>
+                            <option value="fisioterapia">Fisioterapia / Pilates clínico</option>
+                            <option value="nutricao">Nutrição</option>
+                            <option value="psicologia">Psicologia / Terapia</option>
+                            <option value="salao">Salão de beleza / Cabeleireiro</option>
+                            <option value="barbearia">Barbearia</option>
+                            <option value="veterinaria">Veterinária / Pet shop</option>
+                            <option value="academia">Academia / Personal trainer</option>
+                            <option value="outro">Outro (descreva nos campos abaixo)</option>
+                        </select>
+                        <p class="hint">A lista de serviços abaixo é filtrada de acordo com sua escolha.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Categoria principal sugerida para o GMB <span class="required">*</span></label>
+                        <input type="text" name="categoriaPrincipal" required placeholder="Ex: Clínica de estética, Dentista, Dermatologista, Salão de beleza">
+                        <p class="hint">Esta é a categoria que o Google usa para indexar — geralmente bate com o tipo de negócio acima.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Categorias secundárias (até 9) — palavras-chave que descrevem outros serviços</label>
+                        <textarea name="categoriasSecundarias" placeholder="Ex: Clínica de estética facial, Centro de depilação, Spa, Massoterapia"></textarea>
+                    </div>
+
+                    <!-- ===== ESTÉTICA ===== -->
+                    <div class="services-group" data-specialty="estetica" style="display:none">
+                        <div class="form-group">
+                            <label>Procedimentos faciais oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="fac_limpeza"><span class="checkbox-label">Limpeza de pele</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fac_peeling"><span class="checkbox-label">Peeling químico</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fac_microagulhamento"><span class="checkbox-label">Microagulhamento</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fac_botox"><span class="checkbox-label">Toxina botulínica (botox)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fac_preenchimento"><span class="checkbox-label">Preenchimento</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fac_harmonizacao"><span class="checkbox-label">Harmonização facial</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fac_fios"><span class="checkbox-label">Fios de sustentação (PDO)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fac_bichectomia"><span class="checkbox-label">Bichectomia</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fac_laserFacial"><span class="checkbox-label">Laser facial</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fac_rfFacial"><span class="checkbox-label">Radiofrequência facial</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fac_skinbooster"><span class="checkbox-label">Skinbooster / Bioestimulador</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fac_lavieen"><span class="checkbox-label">Lavieen / Spectra</span></label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Procedimentos corporais oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="cor_drenagem"><span class="checkbox-label">Drenagem linfática</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cor_criolipolise"><span class="checkbox-label">Criolipólise</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cor_rfCorporal"><span class="checkbox-label">Radiofrequência corporal</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cor_hifu"><span class="checkbox-label">Ultrassom HIFU</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cor_depilacaoLaser"><span class="checkbox-label">Depilação a laser</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cor_modeladora"><span class="checkbox-label">Massagem modeladora</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cor_lipoEnzimatica"><span class="checkbox-label">Lipo enzimática</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cor_intradermo"><span class="checkbox-label">Intradermoterapia</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cor_carboxi"><span class="checkbox-label">Carboxiterapia</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cor_pressoterapia"><span class="checkbox-label">Pressoterapia</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== ODONTOLOGIA ===== -->
+                    <div class="services-group" data-specialty="odontologia" style="display:none">
+                        <div class="form-group">
+                            <label>Procedimentos odontológicos oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="odo_limpeza"><span class="checkbox-label">Limpeza / Profilaxia</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_restauracao"><span class="checkbox-label">Restauração</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_canal"><span class="checkbox-label">Tratamento de canal</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_extracao"><span class="checkbox-label">Extração simples</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_siso"><span class="checkbox-label">Extração de siso</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_implante"><span class="checkbox-label">Implante dentário</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_enxerto"><span class="checkbox-label">Enxerto ósseo</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_protese"><span class="checkbox-label">Prótese (fixa/removível)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_ortodontia"><span class="checkbox-label">Ortodontia (aparelho fixo)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_invisalign"><span class="checkbox-label">Alinhador invisível (Invisalign)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_clareamento"><span class="checkbox-label">Clareamento dental</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_lentes"><span class="checkbox-label">Lentes de contato dental</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_facetas"><span class="checkbox-label">Facetas</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_hof"><span class="checkbox-label">Harmonização orofacial</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_periodontia"><span class="checkbox-label">Periodontia</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_pediatria"><span class="checkbox-label">Odontopediatria</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_atm"><span class="checkbox-label">Disfunção da ATM / Bruxismo</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="odo_endodontia"><span class="checkbox-label">Endodontia</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== DERMATOLOGIA ===== -->
+                    <div class="services-group" data-specialty="dermatologia" style="display:none">
+                        <div class="form-group">
+                            <label>Procedimentos dermatológicos oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="der_consulta"><span class="checkbox-label">Consulta dermatológica</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_acne"><span class="checkbox-label">Tratamento de acne</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_melasma"><span class="checkbox-label">Manchas / Melasma</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_rosacea"><span class="checkbox-label">Rosácea</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_dermatoscopia"><span class="checkbox-label">Dermatoscopia / Mapeamento de pintas</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_biopsia"><span class="checkbox-label">Biópsia de pele</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_crio"><span class="checkbox-label">Crioterapia</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_eletro"><span class="checkbox-label">Eletrocauterização</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_botox"><span class="checkbox-label">Botox (médico)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_preenchimento"><span class="checkbox-label">Preenchimento (médico)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_peelingMed"><span class="checkbox-label">Peeling médico</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_laserCO2"><span class="checkbox-label">Laser CO2</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_ipl"><span class="checkbox-label">Luz Intensa Pulsada (IPL)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_pico"><span class="checkbox-label">Picosure / Picolaser</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_tricologia"><span class="checkbox-label">Tricologia / Saúde capilar</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_cirurgia"><span class="checkbox-label">Cirurgia dermatológica</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_psoriase"><span class="checkbox-label">Psoríase / Vitiligo</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="der_dermatite"><span class="checkbox-label">Dermatites e alergias</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== GINECOLOGIA / OBSTETRÍCIA ===== -->
+                    <div class="services-group" data-specialty="ginecologia" style="display:none">
+                        <div class="form-group">
+                            <label>Procedimentos ginecológicos / obstétricos oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="gin_consulta"><span class="checkbox-label">Consulta ginecológica</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_preventivo"><span class="checkbox-label">Preventivo (Papanicolau)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_prenatal"><span class="checkbox-label">Pré-natal</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_ultrassom"><span class="checkbox-label">Ultrassom obstétrico/ginecológico</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_colposcopia"><span class="checkbox-label">Colposcopia</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_diu"><span class="checkbox-label">Inserção / remoção de DIU</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_cauterizacao"><span class="checkbox-label">Cauterização do colo</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_climaterio"><span class="checkbox-label">Climatério / Menopausa</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_planejamento"><span class="checkbox-label">Planejamento familiar</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_hormonal"><span class="checkbox-label">Reposição hormonal</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_estetica"><span class="checkbox-label">Ginecologia estética</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_hpv"><span class="checkbox-label">Vacinação HPV</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_acompanhamento"><span class="checkbox-label">Acompanhamento gestacional</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="gin_dst"><span class="checkbox-label">Avaliação e tratamento de DSTs</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== CLÍNICO GERAL ===== -->
+                    <div class="services-group" data-specialty="clinico" style="display:none">
+                        <div class="form-group">
+                            <label>Serviços médicos oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="cli_consulta"><span class="checkbox-label">Consulta clínica geral</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cli_checkup"><span class="checkbox-label">Check-up preventivo</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cli_atestados"><span class="checkbox-label">Atestados e laudos</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cli_cronicos"><span class="checkbox-label">Acompanhamento de crônicos (HAS, DM)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cli_vacinacao"><span class="checkbox-label">Vacinação adulta</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cli_pequenosProc"><span class="checkbox-label">Pequenos procedimentos (suturas, drenagens)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cli_aconselhamento"><span class="checkbox-label">Aconselhamento médico</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cli_examesColeta"><span class="checkbox-label">Coleta de exames laboratoriais</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cli_pre"><span class="checkbox-label">Avaliação pré-operatória</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="cli_geriatria"><span class="checkbox-label">Atendimento geriátrico</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== FISIOTERAPIA ===== -->
+                    <div class="services-group" data-specialty="fisioterapia" style="display:none">
+                        <div class="form-group">
+                            <label>Serviços de fisioterapia oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="fis_ortopedica"><span class="checkbox-label">Fisioterapia ortopédica</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fis_esportiva"><span class="checkbox-label">Fisioterapia esportiva</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fis_neurologica"><span class="checkbox-label">Fisioterapia neurológica</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fis_pilates"><span class="checkbox-label">Pilates clínico</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fis_rpg"><span class="checkbox-label">RPG (Reeducação Postural Global)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fis_reabilitacao"><span class="checkbox-label">Reabilitação pós-cirúrgica</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fis_eletro"><span class="checkbox-label">Eletroterapia / Ultrassom</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fis_miofascial"><span class="checkbox-label">Liberação miofascial</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fis_respiratoria"><span class="checkbox-label">Fisioterapia respiratória</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fis_pelvica"><span class="checkbox-label">Fisioterapia pélvica</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fis_pediatrica"><span class="checkbox-label">Fisioterapia pediátrica</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="fis_quiropraxia"><span class="checkbox-label">Quiropraxia</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== NUTRIÇÃO ===== -->
+                    <div class="services-group" data-specialty="nutricao" style="display:none">
+                        <div class="form-group">
+                            <label>Serviços de nutrição oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="nut_consulta"><span class="checkbox-label">Consulta nutricional</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="nut_bioimpedancia"><span class="checkbox-label">Avaliação por bioimpedância</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="nut_plano"><span class="checkbox-label">Plano alimentar personalizado</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="nut_esportiva"><span class="checkbox-label">Nutrição esportiva</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="nut_clinica"><span class="checkbox-label">Nutrição clínica</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="nut_materno"><span class="checkbox-label">Materno-infantil</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="nut_reeducacao"><span class="checkbox-label">Reeducação alimentar</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="nut_online"><span class="checkbox-label">Atendimento online</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="nut_bariatria"><span class="checkbox-label">Pré/pós bariátrica</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="nut_vegetariana"><span class="checkbox-label">Vegetariana / Vegana</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== PSICOLOGIA ===== -->
+                    <div class="services-group" data-specialty="psicologia" style="display:none">
+                        <div class="form-group">
+                            <label>Atendimentos psicológicos oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="psi_adulto"><span class="checkbox-label">Terapia individual adulto</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="psi_adolescente"><span class="checkbox-label">Terapia adolescente</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="psi_infantil"><span class="checkbox-label">Terapia infantil</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="psi_casal"><span class="checkbox-label">Terapia de casal</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="psi_familiar"><span class="checkbox-label">Terapia familiar</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="psi_tcc"><span class="checkbox-label">Terapia Cognitivo-Comportamental (TCC)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="psi_psicanalise"><span class="checkbox-label">Psicanálise</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="psi_avaliacao"><span class="checkbox-label">Avaliação psicológica</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="psi_online"><span class="checkbox-label">Atendimento online</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="psi_diagnostico"><span class="checkbox-label">Psicodiagnóstico</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="psi_parental"><span class="checkbox-label">Orientação parental</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="psi_luto"><span class="checkbox-label">Atendimento de luto</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== SALÃO DE BELEZA ===== -->
+                    <div class="services-group" data-specialty="salao" style="display:none">
+                        <div class="form-group">
+                            <label>Serviços de salão oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="sal_corteF"><span class="checkbox-label">Corte feminino</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_corteM"><span class="checkbox-label">Corte masculino</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_escova"><span class="checkbox-label">Escova / Hidratação</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_coloracao"><span class="checkbox-label">Coloração</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_mechas"><span class="checkbox-label">Mechas / Ombré / Balayage</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_progressiva"><span class="checkbox-label">Progressiva / Alisamento</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_botoxCap"><span class="checkbox-label">Botox capilar</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_cauterizacao"><span class="checkbox-label">Cauterização capilar</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_manicure"><span class="checkbox-label">Manicure / Pedicure</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_sobrancelha"><span class="checkbox-label">Design de sobrancelha</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_depilacao"><span class="checkbox-label">Depilação (cera)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_maquiagem"><span class="checkbox-label">Maquiagem</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_penteado"><span class="checkbox-label">Penteado para eventos</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="sal_extensao"><span class="checkbox-label">Extensão de cílios</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== BARBEARIA ===== -->
+                    <div class="services-group" data-specialty="barbearia" style="display:none">
+                        <div class="form-group">
+                            <label>Serviços de barbearia oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="bar_corte"><span class="checkbox-label">Corte masculino</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="bar_barba"><span class="checkbox-label">Barba completa (toalha quente)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="bar_designBarba"><span class="checkbox-label">Design de barba</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="bar_combo"><span class="checkbox-label">Combo corte + barba</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="bar_sobrancelha"><span class="checkbox-label">Sobrancelha masculina</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="bar_pigmentacao"><span class="checkbox-label">Pigmentação capilar</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="bar_camuflagem"><span class="checkbox-label">Camuflagem de fios brancos</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="bar_acabamento"><span class="checkbox-label">Acabamento (linha)</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="bar_hidratacao"><span class="checkbox-label">Hidratação capilar</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="bar_relaxamento"><span class="checkbox-label">Relaxamento de cachos</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="bar_kids"><span class="checkbox-label">Corte kids</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="bar_massagem"><span class="checkbox-label">Massagem na cadeira</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== VETERINÁRIA / PET ===== -->
+                    <div class="services-group" data-specialty="veterinaria" style="display:none">
+                        <div class="form-group">
+                            <label>Serviços veterinários / pet oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="vet_consulta"><span class="checkbox-label">Consulta veterinária</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="vet_vacinacao"><span class="checkbox-label">Vacinação</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="vet_vermifugacao"><span class="checkbox-label">Vermifugação</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="vet_banho"><span class="checkbox-label">Banho e tosa</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="vet_castracao"><span class="checkbox-label">Castração</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="vet_cirurgia"><span class="checkbox-label">Cirurgias gerais</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="vet_exames"><span class="checkbox-label">Exames laboratoriais</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="vet_emergencia"><span class="checkbox-label">Atendimento de emergência</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="vet_geriatrico"><span class="checkbox-label">Acompanhamento geriátrico</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="vet_internacao"><span class="checkbox-label">Internação</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="vet_hotel"><span class="checkbox-label">Hotel / Creche para pets</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="vet_microchip"><span class="checkbox-label">Microchipagem</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ===== ACADEMIA / PERSONAL ===== -->
+                    <div class="services-group" data-specialty="academia" style="display:none">
+                        <div class="form-group">
+                            <label>Modalidades / serviços oferecidos</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-item"><input type="checkbox" name="aca_musculacao"><span class="checkbox-label">Musculação</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="aca_funcional"><span class="checkbox-label">Treinamento funcional</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="aca_hiit"><span class="checkbox-label">HIIT</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="aca_crossfit"><span class="checkbox-label">Crossfit / Cross training</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="aca_pilates"><span class="checkbox-label">Pilates</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="aca_yoga"><span class="checkbox-label">Yoga</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="aca_danca"><span class="checkbox-label">Dança / Zumba</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="aca_lutas"><span class="checkbox-label">Lutas / Artes marciais</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="aca_personal"><span class="checkbox-label">Personal trainer</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="aca_avaliacao"><span class="checkbox-label">Avaliação física</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="aca_online"><span class="checkbox-label">Treino online</span></label>
+                                <label class="checkbox-item"><input type="checkbox" name="aca_grupo"><span class="checkbox-label">Aulas em grupo</span></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Outros serviços / procedimentos não listados acima</label>
+                        <textarea name="outrosProcedimentos" placeholder="Liste outros serviços relevantes que você oferece e que não apareceram na lista acima"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Faixa de preço — ticket médio por sessão</label>
+                            <select name="ticketMedio">
+                                <option value="">Selecione</option>
+                                <option>Até R$ 150</option>
+                                <option>R$ 151 – R$ 300</option>
+                                <option>R$ 301 – R$ 600</option>
+                                <option>R$ 601 – R$ 1.200</option>
+                                <option>R$ 1.201 – R$ 2.500</option>
+                                <option>Acima de R$ 2.500</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Trabalha com pacotes/combos?</label>
+                            <select name="trabalhaPacotes">
+                                <option value="">Selecione</option>
+                                <option>Sim, é o principal modelo</option>
+                                <option>Sim, junto com avulsos</option>
+                                <option>Só avulsos</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Descreva seus principais pacotes/combos (se houver)</label>
+                        <textarea name="descricaoPacotes" placeholder="Ex: Pacote 'Glow Facial' — 6 sessões de limpeza + microagulhamento por R$ 1.800"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Aceita planos de saúde / convênios?</label>
+                        <input type="text" name="planos" placeholder="Liste os convênios aceitos ou marque 'Não'">
+                    </div>
+                </div>
+
+                <!-- ============= 6. DIFERENCIAIS E POSICIONAMENTO ============= -->
+                <div class="form-section">
+                    <div class="section-title"><span class="section-number">Seção 06</span> Diferenciais e Posicionamento</div>
+                    <p class="section-desc">O que faz seu negócio ser escolhido — usado na descrição do GMB e nas postagens.</p>
+
+                    <div class="form-group">
+                        <label>3 principais diferenciais do seu negócio <span class="required">*</span></label>
+                        <textarea name="diferenciais" required placeholder="1. ...&#10;2. ...&#10;3. ..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tecnologias ou equipamentos exclusivos / de alto padrão</label>
+                        <textarea name="tecnologias" placeholder="Ex: Equipamento Ultraformer III, laser Excel V, plataforma Venus Legacy"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Certificações, prêmios, reconhecimentos</label>
+                        <textarea name="certificacoes" placeholder="Ex: Certificação Allergan, Top 10 clínicas Doctoralia 2025"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Filosofia de atendimento (em 1–2 frases) <span class="required">*</span></label>
+                        <textarea name="filosofia" required placeholder="Como vocês tratam o cliente? O que torna a experiência diferente?"></textarea>
+                    </div>
+                </div>
+
+                <!-- ============= 7. ATRIBUTOS E COMODIDADES ============= -->
+                <div class="form-section">
+                    <div class="section-title"><span class="section-number">Seção 07</span> Atributos e Comodidades</div>
+                    <p class="section-desc">Características da estrutura — o Google permite marcar dezenas desses atributos.</p>
+
+                    <div class="form-group">
+                        <label>Acessibilidade</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item"><input type="checkbox" name="ac_cadeirante"><span class="checkbox-label">Acesso para cadeirantes</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="ac_banheiro"><span class="checkbox-label">Banheiro acessível</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="ac_vaga"><span class="checkbox-label">Vagas reservadas</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="ac_elevador"><span class="checkbox-label">Elevador</span></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Formas de pagamento aceitas <span class="required">*</span></label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item"><input type="checkbox" name="pag_pix"><span class="checkbox-label">PIX</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="pag_dinheiro"><span class="checkbox-label">Dinheiro</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="pag_debito"><span class="checkbox-label">Cartão de débito</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="pag_credito"><span class="checkbox-label">Cartão de crédito</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="pag_parcelado"><span class="checkbox-label">Parcelado</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="pag_transferencia"><span class="checkbox-label">Transferência bancária</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="pag_boleto"><span class="checkbox-label">Boleto</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="pag_carne"><span class="checkbox-label">Carnê próprio</span></label>
+                        </div>
+                        <input type="text" name="parcelamentoMax" placeholder="Parcela em até quantas vezes? Ex: 10x sem juros" style="margin-top: 12px;">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Estacionamento</label>
+                        <div class="radio-group">
+                            <label class="radio-item"><input type="radio" name="estac" value="proprio_gratis"><span class="radio-label">Próprio gratuito</span></label>
+                            <label class="radio-item"><input type="radio" name="estac" value="proprio_pago"><span class="radio-label">Próprio pago</span></label>
+                            <label class="radio-item"><input type="radio" name="estac" value="rua"><span class="radio-label">Vagas na rua</span></label>
+                            <label class="radio-item"><input type="radio" name="estac" value="valet"><span class="radio-label">Valet</span></label>
+                            <label class="radio-item"><input type="radio" name="estac" value="convenio"><span class="radio-label">Convênio com estacionamento próximo</span></label>
+                            <label class="radio-item"><input type="radio" name="estac" value="sem"><span class="radio-label">Sem estacionamento</span></label>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Wi-Fi gratuito para clientes?</label>
+                            <select name="wifi"><option value="">Selecione</option><option>Sim</option><option>Não</option></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Ar-condicionado?</label>
+                            <select name="ar"><option value="">Selecione</option><option>Sim</option><option>Não</option></select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Atende apenas com hora marcada?</label>
+                            <select name="horaMarcada"><option value="">Selecione</option><option>Sim, somente</option><option>Aceita walk-in</option><option>Hora marcada preferencial</option></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Sala de espera confortável?</label>
+                            <select name="salaEspera"><option value="">Selecione</option><option>Sim, com cortesias</option><option>Sim, padrão</option><option>Pequena</option></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Idiomas falados pela equipe</label>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-item"><input type="checkbox" name="idi_pt"><span class="checkbox-label">Português</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="idi_en"><span class="checkbox-label">Inglês</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="idi_es"><span class="checkbox-label">Espanhol</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="idi_fr"><span class="checkbox-label">Francês</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="idi_libras"><span class="checkbox-label">Libras</span></label>
+                            <label class="checkbox-item"><input type="checkbox" name="idi_outro"><span class="checkbox-label">Outro</span></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Atende menores de idade? (com responsável)</label>
+                        <select name="menores">
+                            <option value="">Selecione</option>
+                            <option>Sim, em todos os procedimentos permitidos</option>
+                            <option>Sim, apenas em procedimentos específicos</option>
+                            <option>Não atende</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ============= 9. PALAVRAS-CHAVE E FAQ ============= -->
+                <div class="form-section">
+                    <div class="section-title"><span class="section-number">Seção 08</span> Palavras-chave, Buscas e FAQ</div>
+                    <p class="section-desc">Como as pessoas procuram seu negócio e o que mais perguntam. Isso vira descrição, postagens e seção de perguntas no GMB.</p>
+
+                    <div class="form-group">
+                        <label>Como você acredita que clientes em potencial procuram seu negócio no Google? <span class="required">*</span></label>
+                        <textarea name="palavrasChave" required placeholder="Liste 5–10 termos.&#10;Ex: 'dentista em [bairro]', 'limpeza de pele preço', 'fisioterapeuta [cidade]'"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Bairros e cidades onde você quer aparecer nos primeiros resultados <span class="required">*</span></label>
+                        <textarea name="regioes" required placeholder="Liste em ordem de prioridade. Ex: Itaim Bibi, Pinheiros, Vila Olímpia, Moema"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>5 perguntas mais comuns que recebe dos clientes <span class="required">*</span></label>
+                        <textarea name="faqPerguntas" required placeholder="1. ...&#10;2. ...&#10;3. ...&#10;4. ...&#10;5. ..." style="min-height: 130px;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>5 principais objeções/medos que os clientes trazem <span class="required">*</span></label>
+                        <textarea name="objecoes" required placeholder="Ex: 'é seguro?', 'dói muito?', 'em quantas sessões vejo resultado?', 'qual o preço?'" style="min-height: 130px;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Termos ou associações que você NÃO quer no perfil</label>
+                        <input type="text" name="evitarTermos" placeholder="Ex: 'preço baixo', 'promoção relâmpago'">
+                    </div>
+                </div>
+
+                <!-- ============= IDENTIFICAÇÃO DE QUEM PREENCHE ============= -->
+                <div class="form-section">
+                    <div class="section-title"><span class="section-number">Final</span> Quem está preenchendo</div>
+                    <p class="section-desc">Para confirmação e dúvidas sobre o briefing.</p>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Seu nome <span class="required">*</span></label>
+                            <input type="text" name="responsavelNome" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Seu cargo / função</label>
+                            <input type="text" name="responsavelCargo" placeholder="Ex: Proprietária, gestora, RT">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Seu WhatsApp <span class="required">*</span></label>
+                            <input type="tel" name="responsavelWhats" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Seu e-mail <span class="required">*</span></label>
+                            <input type="email" name="responsavelEmail" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="form-buttons">
+                    <button type="button" class="btn-secondary" onclick="window.print()">Imprimir / Salvar como PDF</button>
+                    <button type="submit" class="btn-primary" id="btnSubmit">Enviar Briefing</button>
+                </div>
+            </form>
+
+            <!-- SUCCESS -->
+            <div class="success-message" id="successMessage">
+                <div class="success-icon">✓</div>
+                <h3>Briefing recebido com sucesso</h3>
+                <p>Vamos analisar todas as informações e, em até 2 dias úteis, retornamos com o cronograma de criação da sua ficha no Google Meu Negócio.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Conditional sections toggle
+        function toggle(id, show) {
+            const el = document.getElementById(id);
+            if (show) el.classList.add('show');
+            else el.classList.remove('show');
+        }
+
+        // Mostrar apenas o grupo de serviços correspondente à especialidade escolhida
+        function showServicesFor(specialty) {
+            document.querySelectorAll('.services-group').forEach(g => {
+                g.style.display = 'none';
+                g.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            });
+            if (specialty && specialty !== 'outro') {
+                const target = document.querySelector(`.services-group[data-specialty="${specialty}"]`);
+                if (target) target.style.display = 'block';
+            }
+        }
+
+        // Apps Script endpoint — planilha "Briefings GMB - Atlas Scale" (contato.atlasscale@gmail.com)
+        const ENDPOINT = 'https://script.google.com/macros/s/AKfycby4MDUJYVpLr70Xndxd96FSSGqkV1zchdL6fsW9AIhVb3WuKL_vPSXFYHof5Pq-NiHe/exec';
+
+        document.getElementById('gmbForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const btn = document.getElementById('btnSubmit');
+            btn.disabled = true;
+            btn.textContent = 'Enviando...';
+
+            const data = {};
+            new FormData(form).forEach((value, key) => {
+                if (data[key]) {
+                    data[key] = Array.isArray(data[key]) ? [...data[key], value] : [data[key], value];
+                } else {
+                    data[key] = value;
+                }
+            });
+
+            // Capturar checkboxes (ignorar os de grupos de serviços ocultos)
+            form.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                const parent = cb.closest('.services-group');
+                if (parent && parent.style.display === 'none') return;
+                data[cb.name] = cb.checked ? 'Sim' : 'Não';
+            });
+
+            data._timestamp = new Date().toISOString();
+
+            try {
+                if (ENDPOINT.includes('COLE_AQUI')) {
+                    // Modo demonstração: baixa um JSON local
+                    const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'briefing-gmb-' + (data.nomeFantasia || 'negocio').replace(/\s+/g, '-').toLowerCase() + '.json';
+                    a.click();
+                    URL.revokeObjectURL(url);
+                } else {
+                    await fetch(ENDPOINT, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    });
+                }
+                form.style.display = 'none';
+                document.getElementById('successMessage').classList.add('show');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (err) {
+                alert('Erro ao enviar. Por favor, salve como PDF e envie por WhatsApp/e-mail.');
+                btn.disabled = false;
+                btn.textContent = 'Enviar Briefing';
+            }
+        });
+    </script>
+</body>
+</html>
