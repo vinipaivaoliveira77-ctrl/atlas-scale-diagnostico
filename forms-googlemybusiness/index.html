@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-    <meta name="theme-color" content="#1E2A3A">
+    <meta name="theme-color" content="#000000">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
@@ -14,27 +14,28 @@
         html, body { overflow-x: hidden; -webkit-text-size-adjust: 100%; }
 
         :root {
-            --navy: #1E2A3A;
-            --navy-light: #2D3E54;
-            --gold: #C9A77C;
-            --gold-soft: #E2D7AC;
-            --cream: #FAF7F2;
-            --cream-deep: #F0EAE0;
-            --text-dark: #1A1A1A;
-            --text-light: #6B6B6B;
-            --border-light: #E5E2DC;
-            --bg-light: #F8F5F0;
-            --bg-form: #ffffff;
-            --error: #B23A48;
-            --success: #4A6B5D;
+            --violet: #7E3BEC;
+            --violet-light: #AB78FF;
+            --bg-base: #000000;
+            --bg-surface: #0C0C0C;
+            --bg-input: #141414;
+            --bg-hover: #1A1A1A;
+            --text-primary: #F5F5F5;
+            --text-secondary: rgba(245, 245, 245, 0.5);
+            --text-muted: rgba(245, 245, 245, 0.35);
+            --border: rgba(245, 245, 245, 0.08);
+            --border-strong: rgba(245, 245, 245, 0.18);
+            --error: #FF4D6D;
+            --success: #2A8B7A;
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&display=swap');
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, var(--cream) 0%, var(--cream-deep) 100%);
-            color: var(--text-dark);
+            font-family: 'Alexandria', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-base);
+            background-image: radial-gradient(ellipse at top, rgba(126, 59, 236, 0.08) 0%, transparent 60%);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             align-items: flex-start;
@@ -51,26 +52,41 @@
         }
 
         h1, h2, h3 {
-            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-family: 'Alexandria', sans-serif;
             font-weight: 600;
             letter-spacing: -0.3px;
         }
 
         .form-container {
-            background: var(--bg-form);
+            background: var(--bg-surface);
             border-radius: 16px;
-            box-shadow: 0 25px 70px rgba(30, 42, 58, 0.12), 0 0 0 1px rgba(201, 167, 124, 0.1);
+            border: 1px solid var(--border);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(126, 59, 236, 0.08);
             max-width: 780px;
             width: 100%;
             overflow: hidden;
         }
 
         .form-header {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
-            padding: 48px 40px 40px;
-            color: white;
+            background: linear-gradient(180deg, #0C0C0C 0%, #050505 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 56px 40px 44px;
+            color: var(--text-primary);
             text-align: center;
             position: relative;
+            overflow: hidden;
+        }
+
+        .form-header::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 480px;
+            height: 240px;
+            background: radial-gradient(ellipse at center, rgba(126, 59, 236, 0.25) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .form-header::after {
@@ -79,42 +95,49 @@
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 60px;
-            height: 3px;
-            background: var(--gold);
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--violet) 50%, transparent 100%);
         }
 
         .brand-mark {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 600;
-            letter-spacing: 4px;
-            color: var(--gold);
-            margin-bottom: 20px;
+            letter-spacing: 5px;
+            color: var(--violet-light);
+            margin-bottom: 24px;
             text-transform: uppercase;
+            position: relative;
+            z-index: 1;
         }
 
         .form-header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 12px;
-            color: white;
+            font-size: 2.1rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 1;
         }
 
         .form-header p {
-            font-size: 1rem;
-            color: rgba(255,255,255,0.85);
-            max-width: 520px;
-            margin: 0 auto 16px;
-            line-height: 1.6;
+            font-size: 0.98rem;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto 18px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
         }
 
         .time-note {
             display: inline-block;
             padding: 6px 16px;
-            background: rgba(201, 167, 124, 0.15);
-            border: 1px solid rgba(201, 167, 124, 0.4);
+            background: rgba(126, 59, 236, 0.15);
+            border: 1px solid rgba(126, 59, 236, 0.4);
             border-radius: 20px;
             font-size: 0.85rem;
-            color: var(--gold-soft);
+            color: var(--violet-light);
             margin-top: 8px;
         }
 
@@ -123,12 +146,12 @@
         }
 
         .progress-note {
-            background: var(--bg-light);
-            border-left: 3px solid var(--gold);
+            background: var(--bg-input);
+            border-left: 3px solid var(--violet);
             padding: 14px 18px;
             border-radius: 6px;
             font-size: 0.9rem;
-            color: var(--text-light);
+            color: var(--text-secondary);
             margin-bottom: 36px;
             line-height: 1.6;
         }
@@ -136,7 +159,7 @@
         .form-section {
             margin-bottom: 44px;
             padding-bottom: 36px;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border);
         }
 
         .form-section:last-of-type {
@@ -144,28 +167,29 @@
         }
 
         .section-title {
-            font-family: 'Cormorant Garamond', Georgia, serif;
-            font-size: 1.6rem;
+            font-family: 'Alexandria', sans-serif;
+            font-size: 1.5rem;
             font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 6px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
             display: flex;
             align-items: baseline;
-            gap: 12px;
+            gap: 14px;
+            letter-spacing: -0.3px;
         }
 
         .section-number {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            color: var(--gold);
+            font-family: 'Alexandria', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 3px;
+            color: var(--violet-light);
             text-transform: uppercase;
         }
 
         .section-desc {
             font-size: 0.92rem;
-            color: var(--text-light);
+            color: var(--text-secondary);
             margin-bottom: 24px;
             line-height: 1.6;
         }
@@ -190,7 +214,7 @@
             display: block;
             font-size: 0.9rem;
             font-weight: 500;
-            color: var(--text-dark);
+            color: var(--text-primary);
             margin-bottom: 8px;
         }
 
@@ -201,18 +225,18 @@
         textarea, select {
             width: 100%;
             padding: 12px 14px;
-            border: 1.5px solid var(--border-light);
+            border: 1.5px solid var(--border);
             border-radius: 8px;
             font-size: 0.95rem;
             font-family: inherit;
             transition: all 0.2s ease;
-            background: var(--bg-light);
-            color: var(--text-dark);
+            background: var(--bg-input);
+            color: var(--text-primary);
         }
 
         select {
             cursor: pointer;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23C9A77C' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23AB78FF' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
             background-repeat: no-repeat;
             background-position: right 14px center;
             background-size: 12px;
@@ -221,9 +245,9 @@
 
         input:focus, textarea:focus, select:focus {
             outline: none;
-            border-color: var(--gold);
-            background: white;
-            box-shadow: 0 0 0 3px rgba(201, 167, 124, 0.15);
+            border-color: var(--violet);
+            background: var(--bg-hover);
+            box-shadow: 0 0 0 3px rgba(126, 59, 236, 0.18);
         }
 
         textarea {
@@ -234,7 +258,7 @@
 
         .hint {
             font-size: 0.82rem;
-            color: var(--text-light);
+            color: var(--text-secondary);
             margin-top: 6px;
             line-height: 1.4;
         }
@@ -265,7 +289,7 @@
             width: 18px;
             height: 18px;
             cursor: pointer;
-            accent-color: var(--gold);
+            accent-color: var(--violet);
             flex-shrink: 0;
         }
 
@@ -273,15 +297,15 @@
             font-weight: 400;
             cursor: pointer;
             font-size: 0.92rem;
-            color: var(--text-dark);
+            color: var(--text-primary);
         }
 
         .hidden-section {
             display: none;
             margin-top: 16px;
             padding: 18px;
-            background: var(--bg-light);
-            border-left: 3px solid var(--gold);
+            background: var(--bg-input);
+            border-left: 3px solid var(--violet);
             border-radius: 6px;
         }
 
@@ -296,24 +320,24 @@
         }
 
         .info-card {
-            background: linear-gradient(135deg, rgba(201, 167, 124, 0.08) 0%, rgba(30, 42, 58, 0.04) 100%);
-            border: 1px solid rgba(201, 167, 124, 0.2);
+            background: linear-gradient(135deg, rgba(126, 59, 236, 0.08) 0%, rgba(0, 0, 0, 0.04) 100%);
+            border: 1px solid rgba(126, 59, 236, 0.2);
             border-radius: 10px;
             padding: 20px 22px;
             margin-bottom: 20px;
             font-size: 0.92rem;
             line-height: 1.7;
-            color: var(--text-dark);
+            color: var(--text-primary);
         }
 
         .info-card strong {
-            color: var(--navy);
+            color: var(--violet);
             font-weight: 600;
         }
 
         .info-card ul {
             margin: 12px 0 0 20px;
-            color: var(--text-light);
+            color: var(--text-secondary);
         }
 
         .info-card li {
@@ -326,7 +350,7 @@
             gap: 12px;
             align-items: center;
             padding: 8px 0;
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border);
         }
 
         .day-row:last-child { border-bottom: none; }
@@ -334,7 +358,7 @@
         .day-label {
             font-weight: 500;
             font-size: 0.92rem;
-            color: var(--text-dark);
+            color: var(--text-primary);
         }
 
         .day-row input[type="time"] {
@@ -347,7 +371,7 @@
             align-items: center;
             gap: 6px;
             font-size: 0.85rem;
-            color: var(--text-light);
+            color: var(--text-secondary);
             margin-top: 4px;
         }
 
@@ -356,7 +380,7 @@
             gap: 12px;
             margin-top: 40px;
             padding-top: 32px;
-            border-top: 1px solid var(--border-light);
+            border-top: 1px solid var(--border);
             flex-wrap: wrap;
         }
 
@@ -375,7 +399,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            background: linear-gradient(135deg, var(--violet) 0%, var(--violet-light) 100%);
             color: white;
             flex: 1;
             min-width: 200px;
@@ -383,21 +407,22 @@
 
         .btn-primary:hover:not(:disabled) {
             transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(30, 42, 58, 0.25);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
         }
 
         .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
         .btn-secondary {
-            background: white;
-            color: var(--navy);
-            border: 1.5px solid var(--border-light);
+            background: transparent;
+            color: var(--violet-light);
+            border: 1.5px solid var(--border-strong);
             padding: 14px 24px;
         }
 
         .btn-secondary:hover {
-            border-color: var(--gold);
-            color: var(--gold);
+            background: rgba(126, 59, 236, 0.08);
+            border-color: var(--violet);
+            color: var(--violet-light);
         }
 
         .success-message {
@@ -431,12 +456,12 @@
 
         .success-message h3 {
             font-size: 1.8rem;
-            color: var(--navy);
+            color: var(--violet);
             margin-bottom: 12px;
         }
 
         .success-message p {
-            color: var(--text-light);
+            color: var(--text-secondary);
             max-width: 440px;
             margin: 0 auto;
             line-height: 1.6;
@@ -468,9 +493,9 @@
             body { background: white; padding: 0; }
             .form-container { box-shadow: none; max-width: 100%; }
             .form-buttons { display: none; }
-            .form-header { background: white; color: var(--navy); }
-            .form-header h1, .form-header p { color: var(--navy); }
-            .brand-mark { color: var(--gold); }
+            .form-header { background: white; color: var(--violet); }
+            .form-header h1, .form-header p { color: var(--violet); }
+            .brand-mark { color: var(--violet); }
             .time-note { display: none; }
         }
     </style>
