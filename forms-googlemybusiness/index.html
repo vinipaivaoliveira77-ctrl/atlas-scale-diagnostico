@@ -361,9 +361,16 @@
             color: var(--text-primary);
         }
 
-        .day-row input[type="time"] {
-            padding: 8px 10px;
+        .day-row .time-select {
+            padding: 10px 32px 10px 12px;
             font-size: 0.9rem;
+            color: var(--text-primary);
+            background-color: var(--bg-input);
+        }
+
+        .time-select option {
+            background: var(--bg-surface);
+            color: var(--text-primary);
         }
 
         .closed-checkbox {
@@ -640,13 +647,13 @@
                     <div class="form-group">
                         <label style="margin-bottom: 12px;">Horário de funcionamento <span class="required">*</span></label>
                         <div id="horarios">
-                            <div class="day-row"><span class="day-label">Segunda</span><input type="time" name="seg_abre"><input type="time" name="seg_fecha"></div>
-                            <div class="day-row"><span class="day-label">Terça</span><input type="time" name="ter_abre"><input type="time" name="ter_fecha"></div>
-                            <div class="day-row"><span class="day-label">Quarta</span><input type="time" name="qua_abre"><input type="time" name="qua_fecha"></div>
-                            <div class="day-row"><span class="day-label">Quinta</span><input type="time" name="qui_abre"><input type="time" name="qui_fecha"></div>
-                            <div class="day-row"><span class="day-label">Sexta</span><input type="time" name="sex_abre"><input type="time" name="sex_fecha"></div>
-                            <div class="day-row"><span class="day-label">Sábado</span><input type="time" name="sab_abre"><input type="time" name="sab_fecha"></div>
-                            <div class="day-row"><span class="day-label">Domingo</span><input type="time" name="dom_abre"><input type="time" name="dom_fecha"></div>
+                            <div class="day-row"><span class="day-label">Segunda</span><select class="time-select" name="seg_abre"></select><select class="time-select" name="seg_fecha"></select></div>
+                            <div class="day-row"><span class="day-label">Terça</span><select class="time-select" name="ter_abre"></select><select class="time-select" name="ter_fecha"></select></div>
+                            <div class="day-row"><span class="day-label">Quarta</span><select class="time-select" name="qua_abre"></select><select class="time-select" name="qua_fecha"></select></div>
+                            <div class="day-row"><span class="day-label">Quinta</span><select class="time-select" name="qui_abre"></select><select class="time-select" name="qui_fecha"></select></div>
+                            <div class="day-row"><span class="day-label">Sexta</span><select class="time-select" name="sex_abre"></select><select class="time-select" name="sex_fecha"></select></div>
+                            <div class="day-row"><span class="day-label">Sábado</span><select class="time-select" name="sab_abre"></select><select class="time-select" name="sab_fecha"></select></div>
+                            <div class="day-row"><span class="day-label">Domingo</span><select class="time-select" name="dom_abre"></select><select class="time-select" name="dom_fecha"></select></div>
                         </div>
                         <p class="hint">Deixe em branco os dias em que não funciona. Se houver intervalo (ex: pausa para almoço), descreva no campo abaixo.</p>
                     </div>
@@ -1357,6 +1364,21 @@
     </div>
 
     <script>
+        // Popula os selects de horário com opções de 30 em 30 minutos
+        (function populateTimeSelects() {
+            const times = ['<option value="">--:--</option>'];
+            for (let h = 0; h < 24; h++) {
+                for (let m = 0; m < 60; m += 30) {
+                    const hh = String(h).padStart(2, '0');
+                    const mm = String(m).padStart(2, '0');
+                    const time = `${hh}:${mm}`;
+                    times.push(`<option value="${time}">${time}</option>`);
+                }
+            }
+            const optionsHTML = times.join('');
+            document.querySelectorAll('.time-select').forEach(sel => sel.innerHTML = optionsHTML);
+        })();
+
         // Conditional sections toggle
         function toggle(id, show) {
             const el = document.getElementById(id);
